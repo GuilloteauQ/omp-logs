@@ -271,14 +271,11 @@ void tasks_to_svg(struct task_list* l, char* filename) {
     float end_x = (float) width - 300.0;
 
     double max_time = remap_time_and_get_max_time(l, get_min_time(l));
-    printf("Max time : %f\n", max_time);
     struct task_list** tasks_per_thread = get_tasks_per_thread(l);
     int counter = 0;
 
     for (int i = 0; i < thread_pool_size; i++) {
-        printf("Thread %d\n", i);
         thread_to_svg(tasks_per_thread[i], s_f, max_time, begin_x, end_x, (i + 1) * h, 3 * h / 4, thread_color(i), &counter);
-        print_list(tasks_per_thread[i]);
     }
 
 
