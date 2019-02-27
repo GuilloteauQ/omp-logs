@@ -94,6 +94,6 @@ void log_task(struct task_list** l, char* label, int size, int parent_thread,voi
     f(args);
     end = clock();
     // Get time
-    cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+    cpu_time_used = ((double) (end - start));// / CLOCKS_PER_SEC;
     push(l, new_task(label, size, thread_id, parent_thread, (double) start, cpu_time_used));
 }
