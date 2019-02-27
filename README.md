@@ -34,6 +34,8 @@ void log_task(struct task_list** l, char* label, int info, int parent_id, void (
  * ```f``` is the function that represents the task. It **must** be of type ```void (*f)(void* args)```
  * ```args``` is the argument(s) of ```f```
  
+ I invite you to look at the examples ```mergesort.c``` and ```for_policies.c```
+ 
  ### 4) See your logs !
  
  When all the parallel stuff is done, you can get the logs in a ```svg``` file:
