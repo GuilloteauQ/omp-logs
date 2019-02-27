@@ -29,11 +29,11 @@ struct svg_file {
 }; */
 
 void svg_header(struct svg_file* s_f) {
-    fprintf(s_f->f, "<svg width=\"%d\" height=\"%d\">\n", s_f->width, s_f->height);
+    fprintf(s_f->f, "<?xml version=\"1.0\"?>\n<svg viewBox=\"0 0 %d %d\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\">\n", s_f->width, s_f->height);
 }
 
 void svg_footer(struct svg_file* s_f) {
-    fprintf(s_f->f, "</svg>");
+    fprintf(s_f->f, "<script>\n<![CDATA[\nvar tasks = document.getElementsByClassName('task');\nfor (var i = 0; i < tasks.length; i++) {\nvar tip = document.getElementById('tip_'+i);\ntip.style.display='none';\ntasks[i].tip = tip;\ntasks[i].addEventListener('mouseover', mouseOverEffect);\ntasks[i].addEventListener('mouseout', mouseOutEffect);}\n\nfunction mouseOverEffect() {\nthis.classList.add(\"task-highlight\");\nthis.tip.style.display='block';\n}\n\nfunction mouseOutEffect() {\nthis.classList.remove(\"task-highlight\");\nthis.tip.style.display='none';\n}\n]]>\n</script>\n<style>.task-highlight {fill: #ec008c;opacity: 1;}</style>\n</svg>");
 }
 
 
@@ -59,8 +59,9 @@ void svg_line(struct svg_file* s_f, float x1, float y1, float x2, float y2, char
     fprintf(s_f->f, "<line x1=\"%f\" y1=\"%f\" x2=\"%f\" y2=\"%f\" style=\"%s\"/>\n", x1, y1, x2, y2, style);
 }
 
-void svg_rect(struct svg_file* s_f, float x, float y, float width, float height, char* color) {
-    fprintf(s_f->f, "<rect x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" fill=\"%s\" stroke=\"black\"/>\n", x, y, width, height, color);
+void svg_rect(struct svg_file* s_f, float x, float y, float width, float height, char* color, struct task* task, int counter) {
+    fprintf(s_f->f, "<rect class=\"task\" x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" fill=\"%s\" stroke=\"black\"/>\n", x, y, width, height, color);
+    fprintf(s_f->f, "<g id=\"tip_%d\">\n<rect x=\"%f\" y=\"%f\" width=\"200\" height=\"%f\" fill=\"white\" stoke=\"black\"/>\n<text x=\"%f\" y=\"%f\">[%s] Time: %d, Size: %d</text>\n</g>\n", counter, x, y - height/4.0, height/4.0, x, y - height/8.0,task->label, (int) task->cpu_time_used, task->size);
 }
 
 
@@ -222,22 +223,23 @@ void update_used_time(struct task_list* l) {
 
 
 // Maps a time in the SVG frame
-float get_x_position(double time, double max_time, int width) {
-    return (float) (time * (double) width) / ((float) max_time);
+float get_x_position(double time, double max_time, float begin_x, float end_x) {
+    return time * (end_x - begin_x) / ((float) max_time) + begin_x;
 }
 
-void thread_to_svg(struct task_list* l, struct svg_file* s_f, double max_time, float begin_y, float task_height, char* color) {
+void thread_to_svg(struct task_list* l, struct svg_file* s_f, double max_time, float begin_x, float end_x, float begin_y, float task_height, char* color, int* counter) {
     update_used_time(l);
     // Draw the line for time
-    svg_line(s_f, 0, begin_y, s_f->width, begin_y, "stroke:rgb(255,0,0)");
+    svg_line(s_f, begin_x, begin_y, end_x, begin_y, "stroke:rgb(255,0,0)");
 
     struct task_list* current = l;
 
     while (current != NULL) {
-        float x = get_x_position(current->t->start_time, max_time, s_f->width);
-        float rect_width = get_x_position(current->t->cpu_time_used, max_time, s_f->width);
-        svg_rect(s_f, x, begin_y - task_height / 2.0, rect_width, task_height, color);
+        float x = get_x_position(current->t->start_time, max_time, begin_x, end_x);
+        float rect_width = get_x_position(current->t->cpu_time_used, max_time, begin_x, end_x);
+        svg_rect(s_f, x, begin_y - task_height / 2.0, rect_width, task_height, color, current->t, *counter);
         current = current->next;
+        (*counter)++;
     }
 }
 
@@ -262,14 +264,17 @@ void tasks_to_svg(struct task_list* l, char* filename) {
     struct svg_file* s_f = new_svg_file(filename, width, height);
     int thread_pool_size = omp_get_max_threads();
     float h = height / (float) (thread_pool_size + 1);
+    float begin_x = 0.0;
+    float end_x = (float) width;
 
     double max_time = remap_time_and_get_max_time(l, get_min_time(l));
     printf("Max time : %f\n", max_time);
     struct task_list** tasks_per_thread = get_tasks_per_thread(l);
+    int counter = 0;
 
     for (int i = 0; i < thread_pool_size; i++) {
         printf("Thread %d\n", i);
-        thread_to_svg(tasks_per_thread[i], s_f, max_time, (i + 1) * h, 3 * h / 4, thread_color(i));
+        thread_to_svg(tasks_per_thread[i], s_f, max_time, begin_x, end_x, (i + 1) * h, 3 * h / 4, thread_color(i), &counter);
         print_list(tasks_per_thread[i]);
     }
 
