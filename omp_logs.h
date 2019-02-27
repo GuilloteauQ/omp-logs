@@ -55,6 +55,8 @@ struct task_list* new_list(struct task* t) ;
 
 void push(struct task_list** l, struct task* t) ;
 
+int get_size(struct task_list* l) ;
+
 void free_list(struct task_list* l) ;
 
 void log_task(struct task_list** l, char* label, int size, int parent_thread,void (*f)(void* args), void* args) ;
@@ -64,6 +66,8 @@ double get_min_time(struct task_list* l) ;
 double remap_time_and_get_max_time(struct task_list*  l, double min_time) ;
 
 struct task_list** get_tasks_per_thread(struct task_list* l) ;
+
+void update_used_time(struct task_list* l) ;
 
 float get_x_position(double time, double max_time, int width) ;
 
