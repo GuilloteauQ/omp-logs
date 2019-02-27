@@ -40,4 +40,6 @@ void free_list(struct task_list* l) ;
 
 void log_task(struct task_list** l, char* label, int size, int parent_thread,void (*f)(void* args), void* args) ;
 
+struct task_list** get_tasks_per_thread(struct task_list* l) ;
+
 #endif

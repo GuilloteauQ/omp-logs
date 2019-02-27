@@ -97,3 +97,16 @@ void log_task(struct task_list** l, char* label, int size, int parent_thread,voi
     cpu_time_used = ((double) (end - start));// / CLOCKS_PER_SEC;
     push(l, new_task(label, size, thread_id, parent_thread, (double) start, cpu_time_used));
 }
+
+struct task_list** get_tasks_per_thread(struct task_list* l) {
+    int threads_involved = omp_get_max_threads();
+    struct task_list** tasks_per_thread = malloc(threads_involved * sizeof(struct task_list*));
+
+    struct task_list* current = l;
+
+    while (current != NULL) {
+        push(&(tasks_per_thread[current->t->thread_id]), current->t);
+        current = current->next;
+    }
+    return tasks_per_thread;
+}
