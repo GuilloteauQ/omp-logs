@@ -21,7 +21,7 @@ struct task {
 struct task_list {
     struct task* t;
     struct task_list* next;
-}; */
+};*/
 
 /* [raw]
 struct svg_file {

@@ -1,18 +1,11 @@
-all: mergesort for_policies
+all: lib
 
+omp_logs.o: omp_logs.c
+	gcc -O -c omp_logs.c omp_logs.h -fopenmp
 
-mergesort: mergesort.o omp_logs.c
-	gcc -fopenmp -o mergesort mergesort.o omp_logs.c
-
-mergesort.o: mergesort.c
-	gcc -c -O2 -fopenmp mergesort.c
-
-for_policies: for_policies.o omp_logs.c
-	gcc -fopenmp -o for_policies for_policies.o omp_logs.c
-
-for_policies.o: for_policies.c
-	gcc -c -O2 -fopenmp for_policies.c
-
+lib: omp_logs.o
+	ar rcs libomp_logs.a omp_logs.o
+	ranlib libomp_logs.a
 
 clean:
-	rm -f mergesort for_policies *.o
+	rm -f *.o *.a *.gch
