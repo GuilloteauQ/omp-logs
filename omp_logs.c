@@ -1,18 +1,20 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
+#include <string.h>
 #include <omp.h>
 #include "omp_logs.h"
 
 /* [raw]
 struct task {
     char* label;
-    int size;
+    int info;
     int thread_id;
     int parent_thread_id;
     // TIME
     double start_time;
     double cpu_time_used;
+    struct task_list* children;
 };*/
 
 /* [raw]
@@ -61,30 +63,31 @@ void svg_line(struct svg_file* s_f, float x1, float y1, float x2, float y2, char
 
 void svg_rect(struct svg_file* s_f, float x, float y, float width, float height, char* color, struct task* task, int counter) {
     fprintf(s_f->f, "<rect class=\"task\" x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" fill=\"%s\" stroke=\"black\"/>\n", x, y, width, height, color);
-    fprintf(s_f->f, "<g id=\"tip_%d\">\n<rect x=\"%f\" y=\"%f\" width=\"200\" height=\"%f\" fill=\"white\" stoke=\"black\"/>\n<text x=\"%f\" y=\"%f\">[%s] Time: %d, Size: %d</text>\n</g>\n", counter, x, y - height/4.0, height/4.0, x, y - height/8.0,task->label, (int) task->cpu_time_used, task->size);
+    fprintf(s_f->f, "<g id=\"tip_%d\">\n<rect x=\"%f\" y=\"%f\" width=\"200\" height=\"%f\" fill=\"white\" stoke=\"black\"/>\n<text x=\"%f\" y=\"%f\">[%s] Time: %d, Info: %d</text>\n</g>\n", counter, x, y - height/4.0, height/4.0, x, y - height/8.0,task->label, (int) task->cpu_time_used, task->info);
 }
 
 
-struct task* new_task(char* label, int size, int thread_id, int parent_thread_id, double start_time, double cpu_time_used) {
+struct task* new_task(char* label, int info, int thread_id, int parent_thread_id, double start_time, double cpu_time_used) {
     struct task* t = malloc(sizeof(struct task));
 
     t->label = label;
-    t->size = size;
+    t->info = info;
     t->thread_id = thread_id;
     t->parent_thread_id = parent_thread_id;
     t->start_time = start_time;
     t->cpu_time_used = cpu_time_used;
+    t->children = NULL;
 
     return t;
 }
 
 
 void print_task(struct task* t) {
-    printf("(%s):\n\tCalling Thread: %d\n\tParent Thread: %d\n\tSize: %d\n\tStart Time: %f\n\tUsed Time CPU: %f\n",
+    printf("(%s):\n\tCalling Thread: %d\n\tParent Thread: %d\n\tInfo: %d\n\tStart Time: %f\n\tUsed Time CPU: %f\n",
             t->label,
             t->thread_id,
             t->parent_thread_id,
-            t->size,
+            t->info,
             t->start_time,
             t->cpu_time_used);
 }
@@ -230,7 +233,7 @@ float get_x_position(double time, double max_time, float begin_x, float end_x) {
 void thread_to_svg(struct task_list* l, struct svg_file* s_f, double max_time, float begin_x, float end_x, float begin_y, float task_height, char* color, int* counter) {
     update_used_time(l);
     // Draw the line for time
-    svg_line(s_f, begin_x, begin_y, end_x, begin_y, "stroke:rgb(255,0,0)");
+    svg_line(s_f, begin_x, begin_y, end_x, begin_y, "stroke:rgb(0,0,0);stroke-width:3");
 
     struct task_list* current = l;
 
@@ -265,7 +268,7 @@ void tasks_to_svg(struct task_list* l, char* filename) {
     int thread_pool_size = omp_get_max_threads();
     float h = height / (float) (thread_pool_size + 1);
     float begin_x = 0.0;
-    float end_x = (float) width;
+    float end_x = (float) width - 300.0;
 
     double max_time = remap_time_and_get_max_time(l, get_min_time(l));
     printf("Max time : %f\n", max_time);
