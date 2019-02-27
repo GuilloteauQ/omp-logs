@@ -1,13 +1,23 @@
 # OMP-Logs
 Logging lib for OpenMP
 
+## Compilation
+
+You can compile the lib by doing ```make```
+
+Then, you can use this lib from anywhere.
+The builds will look like:
+```
+gcc file.c -o file.o -L/path -lomp_logs
+```
+where ```path``` is the path to the directory where you built the lib.
 
 ## Usage
 
 ### 1) Import the header file
 
 ```c
-#include "omp_logs.h"
+#include "path/to/the/file/omp_logs.h"
 ```
 
 ### 2) Create a empty list of tasks
