@@ -21,6 +21,47 @@ struct task_list {
     struct task_list* next;
 }; */
 
+/* [raw]
+struct svg_file {
+    FILE* f;
+    int height;
+    int width;
+}; */
+
+void svg_header(struct svg_file* s_f) {
+    fprintf(s_f->f, "<svg width=\"%d\" height=\"%d\">\n", s_f->width, s_f->height);
+}
+
+void svg_footer(struct svg_file* s_f) {
+    fprintf(s_f->f, "</svg>");
+}
+
+
+struct svg_file* new_svg_file(char* filename, int width, int height) {
+    struct svg_file* s_f = malloc(sizeof(struct svg_file));
+
+    s_f->f = fopen(filename, "w");
+    s_f->height = height;
+    s_f->width = width;
+
+    svg_header(s_f);
+
+    return s_f;
+}
+
+void close_svg(struct svg_file* s_f) {
+    svg_footer(s_f);
+    fclose(s_f->f);
+    free(s_f);
+}
+
+void svg_line(struct svg_file* s_f, float x1, float y1, float x2, float y2, char* style) {
+    fprintf(s_f->f, "<line x1=\"%f\" y1=\"%f\" x2=\"%f\" y2=\"%f\" style=\"%s\"/>\n", x1, y1, x2, y2, style);
+}
+
+void svg_rect(struct svg_file* s_f, float x, float y, float width, float height, char* style) {
+    fprintf(s_f->f, "<rect x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" style=\"%s\"/>\n", x, y, width, height, style);
+}
 
 
 struct task* new_task(char* label, int size, int thread_id, int parent_thread_id, double start_time, double cpu_time_used) {
@@ -98,6 +139,35 @@ void log_task(struct task_list** l, char* label, int size, int parent_thread,voi
     push(l, new_task(label, size, thread_id, parent_thread, (double) start, cpu_time_used));
 }
 
+double get_min_time(struct task_list* l) {
+    double current_min = l->t->start_time;
+    struct task_list* current = l;
+
+    while (current != NULL) {
+        if (current->t->start_time < current_min) {
+            current_min = current->t->start_time;
+        }
+        current = current->next;
+    }
+    return current_min;
+}
+
+double remap_time_and_get_max_time(struct task_list*  l, double min_time) {
+    double current_max = 0;
+    struct task_list* current = l;
+
+    while (current != NULL) {
+        current->t->start_time = current->t->start_time - min_time;
+        double challenger = current->t->start_time + current->t->cpu_time_used;
+        if (challenger > current_max) {
+            current_max = challenger;
+        }
+        current = current->next;
+    }
+
+    return current_max;
+}
+
 struct task_list** get_tasks_per_thread(struct task_list* l) {
     int threads_involved = omp_get_max_threads();
     struct task_list** tasks_per_thread = malloc(threads_involved * sizeof(struct task_list*));
@@ -112,4 +182,43 @@ struct task_list** get_tasks_per_thread(struct task_list* l) {
         current = current->next;
     }
     return tasks_per_thread;
+}
+
+// Maps a time in the SVG frame
+float get_x_position(double time, double max_time, int width) {
+    return (float) (time * (double) width) / ((float) max_time);
+}
+
+void thread_to_svg(struct task_list* l, struct svg_file* s_f, double max_time, float begin_y, float task_height) {
+    // Draw the line for time
+    svg_line(s_f, 0, begin_y, s_f->width, begin_y, "stroke:rgb(255,0,0)");
+
+    struct task_list* current = l;
+
+    while (current != NULL) {
+        float x = get_x_position(current->t->start_time, max_time, s_f->width);
+        float rect_width = get_x_position(current->t->cpu_time_used, max_time, s_f->width);
+        svg_rect(s_f, x, begin_y - task_height / 2.0, rect_width, task_height, "fill:rgb(0,0,255);stroke-width:3;stroke:rgb(0,0,0)");
+        current = current->next;
+    }
+}
+
+void tasks_to_svg(struct task_list* l, char* filename) {
+    int width = 2000;
+    int height = 800;
+    struct svg_file* s_f = new_svg_file(filename, width, height);
+    int thread_pool_size = omp_get_max_threads();
+    float h = height / (float) (thread_pool_size + 1);
+
+    double max_time = remap_time_and_get_max_time(l, get_min_time(l));
+    printf("Max time : %f\n", max_time);
+    struct task_list** tasks_per_thread = get_tasks_per_thread(l);
+
+    for (int i = 0; i < thread_pool_size; i++) {
+        print_list(tasks_per_thread[i]);
+        thread_to_svg(tasks_per_thread[i], s_f, max_time, (i + 1) * h, 3 * h / 4);
+    }
+
+
+    close_svg(s_f);
 }

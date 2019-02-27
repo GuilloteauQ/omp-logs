@@ -24,6 +24,25 @@ struct task_list {
     struct task_list* next;
 };
 
+
+struct svg_file {
+    FILE* f;
+    int height;
+    int width;
+};
+
+void svg_header(struct svg_file* s_f) ;
+
+void svg_footer(struct svg_file* s_f) ;
+
+struct svg_file* new_svg_file(char* filename, int width, int height) ;
+
+void close_svg(struct svg_file* s_f) ;
+
+void svg_line(struct svg_file* s_f, float x1, float y1, float x2, float y2, char* style) ;
+
+void svg_rect(struct svg_file* s_f, float x, float y, float width, float height, char* style) ;
+
 struct task* new_task(char* label, int size, int thread_id, int parent_thread_id, double start_time, double cpu_time_used) ;
 
 void print_task(struct task* t) ;
@@ -40,6 +59,16 @@ void free_list(struct task_list* l) ;
 
 void log_task(struct task_list** l, char* label, int size, int parent_thread,void (*f)(void* args), void* args) ;
 
+double get_min_time(struct task_list* l) ;
+
+double remap_time_and_get_max_time(struct task_list*  l, double min_time) ;
+
 struct task_list** get_tasks_per_thread(struct task_list* l) ;
+
+float get_x_position(double time, double max_time, int width) ;
+
+void thread_to_svg(struct task_list* l, struct svg_file* s_f, double max_time, float begin_y, float task_height) ;
+
+void tasks_to_svg(struct task_list* l, char* filename) ;
 
 #endif
