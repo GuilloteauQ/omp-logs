@@ -47,7 +47,18 @@ void log_task(struct task_list** l, char* label, int info, int parent_id, void (
  
  ![example](https://github.com/GuilloteauQ/omp-logs/blob/master/mergesort.svg)
  
+ Every line represents a thread across time.
  
+ Every rectangle is a task.
+ 
+ You can move your mouse on it to see some info:
+ 
+  * The ```label``` of the task
+  * The time it took to execute the task
+  * The ```info``` of the task
+ 
+ 
+## Disclaimer
 
 **This work is highly inspired from** [wagnerf42's rayon-logs](https://github.com/wagnerf42/rayon-logs)
  
