@@ -256,8 +256,16 @@ char* thread_color(int i) {
             return "green";
         case 3:
             return "yellow";
+        case 4:
+            return "pink";
+        case 5:
+            return "orange";
+        case 6:
+            return "tan";
+        case 7:
+            return "aquamarine";
         default:
-            return thread_color(i % 4);
+            return thread_color(i % 8);
     }
 }
 
