@@ -101,6 +101,9 @@ void log_task(struct task_list** l, char* label, int size, int parent_thread,voi
 struct task_list** get_tasks_per_thread(struct task_list* l) {
     int threads_involved = omp_get_max_threads();
     struct task_list** tasks_per_thread = malloc(threads_involved * sizeof(struct task_list*));
+    for (int i = 0; i < threads_involved; i++) {
+        tasks_per_thread[i] = NULL;
+    }
 
     struct task_list* current = l;
 
