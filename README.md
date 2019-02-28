@@ -27,7 +27,7 @@ This list needs to be accessible by every call of the function ```log_task```.
 You can put the list as a global variable to be sure.
 
 ```c
-struct task_list* list = NULL;
+task_list* list = NULL;
 ```
 
 ### 3) Log some tasks !
@@ -35,7 +35,7 @@ struct task_list* list = NULL;
 The function to log a task is:
 
 ```c
-void log_task(struct task_list** l, char* label, int info, int parent_id, void (*f)(void* args), void* args)
+void log_task(task_list** l, char* label, int info, int parent_id, void (*f)(void* args), void* args)
 ```
  * ```l``` is the list of tasks that we created just before
  * ```label``` is the label that you could give to the task
