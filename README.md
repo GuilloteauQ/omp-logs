@@ -53,6 +53,8 @@ void log_task(struct task_list** l, char* label, int info, int parent_id, void (
  ```c
  tasks_to_svg(l, "filename.svg");
  ```
+ This will also free the list ```l```.
+ 
  Even if this is a ```svg``` file, you'll have to open it with your browser.
  
  Here is an example (For the full experience: click on the image, and then, right click -> "View Image"):
