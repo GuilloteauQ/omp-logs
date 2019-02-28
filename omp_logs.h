@@ -34,6 +34,6 @@ void log_task(task_list** l, char* label, int size, int parent_thread,void (*f)(
 
 task_list* task_list_init() ;
 
-void tasks_to_svg(task_list* l, char* filename) ;
+void tasks_to_svg(task_list* l, char* filename, int animated) ;
 
 #endif

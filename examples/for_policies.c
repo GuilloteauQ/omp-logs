@@ -48,7 +48,7 @@ int main(int argc, char** argv) {
         log_task(&l, "Sum", j, omp_get_thread_num(), sum, (void*) &d);
     }
     // We save the svg
-    tasks_to_svg(l, "for_static.svg");
+    tasks_to_svg(l, "for_static.svg", 1);
     // And we free the list of tasks
     l = task_list_init();
 
@@ -60,7 +60,7 @@ int main(int argc, char** argv) {
         log_task(&l, "Sum", j, omp_get_thread_num(), sum, (void*) &d);
 
     }
-    tasks_to_svg(l, "for_dynamic.svg");
+    tasks_to_svg(l, "for_dynamic.svg", 1);
     l = task_list_init();
 
     s = 0;
@@ -70,6 +70,6 @@ int main(int argc, char** argv) {
         log_task(&l, "Sum", j, omp_get_thread_num(), sum, (void*) &d);
 
     }
-    tasks_to_svg(l, "for_guided.svg");
+    tasks_to_svg(l, "for_guided.svg", 1);
     return 0;
 }

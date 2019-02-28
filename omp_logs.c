@@ -35,6 +35,7 @@ struct svg_file {
     FILE* f;
     int height;
     int width;
+    int animated;
 };
 
 // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -46,7 +47,11 @@ struct svg_file {
 
 /* Write the header of the SVG file */
 void svg_header(struct svg_file* s_f) {
-    fprintf(s_f->f, "<?xml version=\"1.0\"?>\n<svg viewBox=\"0 0 %d %d\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\">\n", s_f->width, s_f->height);
+    if (s_f->animated) {
+        fprintf(s_f->f, "<?xml version=\"1.0\"?>\n<svg viewBox=\"0 0 %d %d\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\">\n", s_f->width, s_f->height);
+    } else {
+        fprintf(s_f->f, "<svg viewBox=\"0 0 %d %d\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\">\n", s_f->width, s_f->height);
+    }
 }
 
 /*
@@ -56,17 +61,22 @@ void svg_header(struct svg_file* s_f) {
  * when the mouse is over the task
  */
 void svg_footer(struct svg_file* s_f) {
-    fprintf(s_f->f, "<script>\n<![CDATA[\nvar tasks = document.getElementsByClassName('task');\nfor (var i = 0; i < tasks.length; i++) {\nvar tip = document.getElementById('tip_'+i);\ntip.style.display='none';\ntasks[i].tip = tip;\ntasks[i].addEventListener('mouseover', mouseOverEffect);\ntasks[i].addEventListener('mouseout', mouseOutEffect);}\n\nfunction mouseOverEffect() {\nthis.classList.add(\"task-highlight\");\nthis.tip.style.display='block';\n}\n\nfunction mouseOutEffect() {\nthis.classList.remove(\"task-highlight\");\nthis.tip.style.display='none';\n}\n]]>\n</script>\n<style>.task-highlight {fill: #ec008c;opacity: 1;}</style>\n</svg>");
+    if (s_f->animated) {
+        fprintf(s_f->f, "<script>\n<![CDATA[\nvar tasks = document.getElementsByClassName('task');\nfor (var i = 0; i < tasks.length; i++) {\nvar tip = document.getElementById('tip_'+i);\ntip.style.display='none';\ntasks[i].tip = tip;\ntasks[i].addEventListener('mouseover', mouseOverEffect);\ntasks[i].addEventListener('mouseout', mouseOutEffect);}\n\nfunction mouseOverEffect() {\nthis.classList.add(\"task-highlight\");\nthis.tip.style.display='block';\n}\n\nfunction mouseOutEffect() {\nthis.classList.remove(\"task-highlight\");\nthis.tip.style.display='none';\n}\n]]>\n</script>\n<style>.task-highlight {fill: #ec008c;opacity: 1;}</style>\n</svg>");
+    } else {
+        fprintf(s_f->f, "</svg>");
+    }
 }
 
 
 /* Return a new SVG structure */
-struct svg_file* new_svg_file(char* filename, int width, int height) {
+struct svg_file* new_svg_file(char* filename, int width, int height, int animated) {
     struct svg_file* s_f = malloc(sizeof(struct svg_file));
 
     s_f->f = fopen(filename, "w");
     s_f->height = height;
     s_f->width = width;
+    s_f->animated = animated;
 
     svg_header(s_f);
 
@@ -93,7 +103,9 @@ void svg_text(struct svg_file* s_f, float x, float y, char* color, char* text) {
 /* Draw a rectangle in the SVG file */
 void svg_rect(struct svg_file* s_f, float x, float y, float width, float height, char* color, struct task* task, int counter) {
     fprintf(s_f->f, "<rect class=\"task\" x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" fill=\"%s\" stroke=\"black\"/>\n", x, y, width, height, color);
-    fprintf(s_f->f, "<g id=\"tip_%d\">\n<rect x=\"%f\" y=\"%f\" width=\"200\" height=\"%f\" fill=\"white\" stoke=\"black\"/>\n<text x=\"%f\" y=\"%f\">[%s] Time: %d, Info: %d, From: %d\n</text></g>\n", counter, x, y - height/4.0, height/4.0, x, y - height/8.0,task->label, (int) task->cpu_time_used, task->info, task->parent_thread_id);
+    if (s_f->animated) {
+        fprintf(s_f->f, "<g id=\"tip_%d\">\n<rect x=\"%f\" y=\"%f\" width=\"200\" height=\"%f\" fill=\"white\" stoke=\"black\"/>\n<text x=\"%f\" y=\"%f\">[%s] Time: %d, Info: %d, From: %d\n</text></g>\n", counter, x, y - height/4.0, height/4.0, x, y - height/8.0,task->label, (int) task->cpu_time_used, task->info, task->parent_thread_id);
+    }
 }
 
 // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -387,10 +399,10 @@ char* thread_color(int i) {
  * split the tasks per thread
  * and draw the tasks for every thread
  */
-void tasks_to_svg(task_list* l, char* filename) {
+void tasks_to_svg(task_list* l, char* filename, int animated) {
     int width = 2000;
     int height = 800;
-    struct svg_file* s_f = new_svg_file(filename, width, height);
+    struct svg_file* s_f = new_svg_file(filename, width, height, animated);
     int thread_pool_size = omp_get_max_threads();
     float h = height / (float) (thread_pool_size + 1);
     float begin_x = 0.0;
