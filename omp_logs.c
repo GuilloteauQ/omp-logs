@@ -30,15 +30,30 @@ struct svg_file {
     int width;
 }; */
 
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//
+// SVG
+//
+//
+
+/* Write the header of the SVG file */
 void svg_header(struct svg_file* s_f) {
     fprintf(s_f->f, "<?xml version=\"1.0\"?>\n<svg viewBox=\"0 0 %d %d\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\">\n", s_f->width, s_f->height);
 }
 
+/*
+ * Write the footer of the SVG file
+ * with some JS code taken from https://github.com/wagnerf42/rayon-logs
+ * to display the information about each task
+ * when the mouse is over the task
+ */
 void svg_footer(struct svg_file* s_f) {
     fprintf(s_f->f, "<script>\n<![CDATA[\nvar tasks = document.getElementsByClassName('task');\nfor (var i = 0; i < tasks.length; i++) {\nvar tip = document.getElementById('tip_'+i);\ntip.style.display='none';\ntasks[i].tip = tip;\ntasks[i].addEventListener('mouseover', mouseOverEffect);\ntasks[i].addEventListener('mouseout', mouseOutEffect);}\n\nfunction mouseOverEffect() {\nthis.classList.add(\"task-highlight\");\nthis.tip.style.display='block';\n}\n\nfunction mouseOutEffect() {\nthis.classList.remove(\"task-highlight\");\nthis.tip.style.display='none';\n}\n]]>\n</script>\n<style>.task-highlight {fill: #ec008c;opacity: 1;}</style>\n</svg>");
 }
 
 
+/* Return a new SVG structure */
 struct svg_file* new_svg_file(char* filename, int width, int height) {
     struct svg_file* s_f = malloc(sizeof(struct svg_file));
 
@@ -51,26 +66,37 @@ struct svg_file* new_svg_file(char* filename, int width, int height) {
     return s_f;
 }
 
+/* Close the SVG file, but write the footer before */
 void close_svg(struct svg_file* s_f) {
     svg_footer(s_f);
     fclose(s_f->f);
     free(s_f);
 }
 
+/* Draw a line in the SVG file */
 void svg_line(struct svg_file* s_f, float x1, float y1, float x2, float y2, char* style) {
     fprintf(s_f->f, "<line x1=\"%f\" y1=\"%f\" x2=\"%f\" y2=\"%f\" style=\"%s\"/>\n", x1, y1, x2, y2, style);
 }
 
+/* Write some text in the SVG file */
 void svg_text(struct svg_file* s_f, float x, float y, char* color, char* text) {
     fprintf(s_f->f, "<text x=\"%f\" y=\"%f\" fill=\"%s\">%s</text>\n", x, y, color, text);
 }
 
+/* Draw a rectangle in the SVG file */
 void svg_rect(struct svg_file* s_f, float x, float y, float width, float height, char* color, struct task* task, int counter) {
     fprintf(s_f->f, "<rect class=\"task\" x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" fill=\"%s\" stroke=\"black\"/>\n", x, y, width, height, color);
     fprintf(s_f->f, "<g id=\"tip_%d\">\n<rect x=\"%f\" y=\"%f\" width=\"200\" height=\"%f\" fill=\"white\" stoke=\"black\"/>\n<text x=\"%f\" y=\"%f\">[%s] Time: %d, Info: %d</text>\n</g>\n", counter, x, y - height/4.0, height/4.0, x, y - height/8.0,task->label, (int) task->cpu_time_used, task->info);
 }
 
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//
+// TASKS
+//
+//
 
+/* Return a new task */
 struct task* new_task(char* label, int info, int thread_id, int parent_thread_id, double start_time, double cpu_time_used) {
     struct task* t = malloc(sizeof(struct task));
 
@@ -86,6 +112,7 @@ struct task* new_task(char* label, int info, int thread_id, int parent_thread_id
 }
 
 
+/* Print the data inside the task */
 void print_task(struct task* t) {
     printf("(%s):\n\tCalling Thread: %d\n\tParent Thread: %d\n\tInfo: %d\n\tStart Time: %f\n\tUsed Time CPU: %f\n",
             t->label,
@@ -96,18 +123,14 @@ void print_task(struct task* t) {
             t->cpu_time_used);
 }
 
-void apply_function(struct task_list* l, void (*f)(struct task* t)) {
-    if (l != NULL) {
-        f(l->t);
-        apply_function(l->next, f);
-    }
-}
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//
+// TASKS LIST
+//
+//
 
-void print_list(struct task_list* l) {
-    apply_function(l, print_task);
-}
-
-
+/* Return a new list with a single task inside */
 struct task_list* new_list(struct task* t) {
     struct task_list* l = malloc(sizeof(struct task_list));
     l->t = t;
@@ -115,7 +138,25 @@ struct task_list* new_list(struct task* t) {
     return l;
 }
 
-/* We push in head because it does not really matter here */
+/* Apply recursively a function to every task in the task list */
+void apply_function(struct task_list* l, void (*f)(struct task* t)) {
+    if (l != NULL) {
+        f(l->t);
+        apply_function(l->next, f);
+    }
+}
+
+/* Print the list */
+void print_list(struct task_list* l) {
+    apply_function(l, print_task);
+}
+
+
+
+/*
+ * Push a task in head of the list
+ * We push in head because it does not really matter here
+ */
 void push(struct task_list** l, struct task* t) {
     struct task_list* new_cell = new_list(t);
     if (*l == NULL) {
@@ -126,6 +167,7 @@ void push(struct task_list** l, struct task* t) {
     }
 }
 
+/* Return the size of the list */
 int get_size(struct task_list* l) {
     if (l != NULL) {
         return 1 + get_size(l->next);
@@ -134,6 +176,7 @@ int get_size(struct task_list* l) {
     }
 }
 
+/* Free recursively the list */
 void free_list(struct task_list* l) {
     if (l != NULL) {
         free_list(l->next);
@@ -142,19 +185,25 @@ void free_list(struct task_list* l) {
     }
 }
 
+/*
+ * Log the task
+ * Compute the time it took to achieve the task
+ * Push the new task to the task list
+ */
 void log_task(struct task_list** l, char* label, int size, int parent_thread,void (*f)(void* args), void* args) {
     int thread_id = omp_get_thread_num();
     clock_t start, end;
     double cpu_time_used;
-    // Get time
+
     start = clock();
     f(args);
     end = clock();
-    // Get time
-    cpu_time_used = ((double) (end - start));// / CLOCKS_PER_SEC;
+
+    cpu_time_used = ((double) (end - start));
     push(l, new_task(label, size, thread_id, parent_thread, (double) start, cpu_time_used));
 }
 
+/* Return the minimum starting time in the list */
 double get_min_time(struct task_list* l) {
     double current_min = l->t->start_time;
     struct task_list* current = l;
@@ -168,6 +217,10 @@ double get_min_time(struct task_list* l) {
     return current_min;
 }
 
+/*
+ * Substract the minimum starting time to every starting time
+ * compute the max ending time, and return it
+ */
 double remap_time_and_get_max_time(struct task_list*  l, double min_time) {
     double current_max = 0;
     struct task_list* current = l;
@@ -184,6 +237,11 @@ double remap_time_and_get_max_time(struct task_list*  l, double min_time) {
     return current_max;
 }
 
+/*
+ * From the list of all the tasks, split this list into
+ * a list per thread, where each new list has only tasks
+ * that the associated thread has done
+ */
 struct task_list** get_tasks_per_thread(struct task_list* l) {
     int threads_involved = omp_get_max_threads();
     struct task_list** tasks_per_thread = malloc(threads_involved * sizeof(struct task_list*));
@@ -200,6 +258,12 @@ struct task_list** get_tasks_per_thread(struct task_list* l) {
     return tasks_per_thread;
 }
 
+/*
+ * In the case of recursive tasks, we can have a thread
+ * starting a new task when it was still busy working on an other task
+ * In this case we say that the previous task is done.
+ * So we will update the time it actually used
+ */
 void update_used_time(struct task_list* l) {
     int size = get_size(l);
     double* start_times = malloc(size * sizeof(double));
@@ -229,19 +293,21 @@ void update_used_time(struct task_list* l) {
 }
 
 
-// Maps a time in the SVG frame
+/* Maps a time in the SVG frame */
 float get_x_position(double time, double max_time, float begin_x, float end_x) {
     return time * (end_x - begin_x) / ((float) max_time) + begin_x;
 }
 
-void thread_to_svg(struct task_list* l, struct svg_file* s_f, double max_time, float begin_x, float end_x, float begin_y, float task_height, char* color, int* counter) {
+/* Draw all the content for a single thread */
+void thread_to_svg(struct task_list* l, struct svg_file* s_f, double max_time, float begin_x, float end_x, float begin_y, float task_height, char* color, int* counter, int thread_id) {
     update_used_time(l);
     struct task_list* current = l;
+
     // Draw the line for time
     svg_line(s_f, begin_x, begin_y, end_x, begin_y, "stroke:rgb(0,0,0);stroke-width:3");
     // Write the name of the thread
     char* name = malloc(sizeof(char) * 9);
-    sprintf(name, "Thread %d", current->t->thread_id);
+    sprintf(name, "Thread %d", thread_id);
     svg_text(s_f, (s_f->width - end_x)/2 + end_x, begin_y, "black", name);
     free(name);
 
@@ -255,6 +321,7 @@ void thread_to_svg(struct task_list* l, struct svg_file* s_f, double max_time, f
     }
 }
 
+/* For each thread id, we assign a color */
 char* thread_color(int i) {
     switch (i) {
         case 0:
@@ -278,6 +345,13 @@ char* thread_color(int i) {
     }
 }
 
+
+/*
+ * Takes the list of all the tasks, and a filename,
+ * creates a svg file
+ * split the tasks per thread
+ * and draw the tasks for every thread
+ */
 void tasks_to_svg(struct task_list* l, char* filename) {
     int width = 2000;
     int height = 800;
@@ -292,9 +366,10 @@ void tasks_to_svg(struct task_list* l, char* filename) {
     int counter = 0;
 
     for (int i = 0; i < thread_pool_size; i++) {
-        thread_to_svg(tasks_per_thread[i], s_f, max_time, begin_x, end_x, (i + 1) * h, 3 * h / 4, thread_color(i), &counter);
+        thread_to_svg(tasks_per_thread[i], s_f, max_time, begin_x, end_x, (i + 1) * h, 3 * h / 4, thread_color(i), &counter, i);
     }
 
 
     close_svg(s_f);
+    free_list(l);
 }

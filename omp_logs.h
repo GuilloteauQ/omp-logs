@@ -51,11 +51,11 @@ struct task* new_task(char* label, int info, int thread_id, int parent_thread_id
 
 void print_task(struct task* t) ;
 
+struct task_list* new_list(struct task* t) ;
+
 void apply_function(struct task_list* l, void (*f)(struct task* t)) ;
 
 void print_list(struct task_list* l) ;
-
-struct task_list* new_list(struct task* t) ;
 
 void push(struct task_list** l, struct task* t) ;
 
@@ -75,7 +75,7 @@ void update_used_time(struct task_list* l) ;
 
 float get_x_position(double time, double max_time, float begin_x, float end_x) ;
 
-void thread_to_svg(struct task_list* l, struct svg_file* s_f, double max_time, float begin_x, float end_x, float begin_y, float task_height, char* color, int* counter) ;
+void thread_to_svg(struct task_list* l, struct svg_file* s_f, double max_time, float begin_x, float end_x, float begin_y, float task_height, char* color, int* counter, int thread_id) ;
 
 char* thread_color(int i) ;
 
