@@ -100,6 +100,4 @@ int main (int argc, char **argv) {
         log_task(&l, "Start", N, omp_get_thread_num(), merge_sort_data, (void*) d);
     }
     tasks_to_svg(l, "mergesort.svg");
-
-    free_list(l);
 }

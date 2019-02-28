@@ -290,6 +290,8 @@ void update_used_time(struct task_list* l) {
         i++;
         current = current->next;
     }
+    free(start_times);
+    free(used_times);
 }
 
 
@@ -367,9 +369,10 @@ void tasks_to_svg(struct task_list* l, char* filename) {
 
     for (int i = 0; i < thread_pool_size; i++) {
         thread_to_svg(tasks_per_thread[i], s_f, max_time, begin_x, end_x, (i + 1) * h, 3 * h / 4, thread_color(i), &counter, i);
+        free_list(tasks_per_thread[i]);
     }
 
 
     close_svg(s_f);
-    free_list(l);
+    free(tasks_per_thread);
 }

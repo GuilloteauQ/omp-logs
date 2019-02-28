@@ -50,7 +50,6 @@ int main(int argc, char** argv) {
     // We save the svg
     tasks_to_svg(l, "for_static.svg");
     // And we free the list of tasks
-    free_list(l);
     l = NULL;
 
 
@@ -62,7 +61,6 @@ int main(int argc, char** argv) {
 
     }
     tasks_to_svg(l, "for_dynamic.svg");
-    free_list(l);
     l = NULL;
 
     s = 0;
@@ -73,6 +71,5 @@ int main(int argc, char** argv) {
 
     }
     tasks_to_svg(l, "for_guided.svg");
-    free_list(l);
     return 0;
 }
