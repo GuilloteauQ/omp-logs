@@ -55,8 +55,10 @@ void log_task(task_list** l, char* label, int info, int parent_id, void (*f)(voi
  When all the parallel stuff is done, you can get the logs in a ```svg``` file:
  
  ```c
- tasks_to_svg(l, "filename.svg");
+ tasks_to_svg(l, "filename.svg", x);
  ```
+ with ```x = 0``` if you don't want a ```svg``` file with script, ```x = 1``` otherwise.
+ 
  This will also free the list ```l```.
  
  Even if this is a ```svg``` file, you'll have to open it with your browser.
