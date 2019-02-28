@@ -43,6 +43,8 @@ void close_svg(struct svg_file* s_f) ;
 
 void svg_line(struct svg_file* s_f, float x1, float y1, float x2, float y2, char* style) ;
 
+void svg_text(struct svg_file* s_f, float x, float y, char* color, char* text) ;
+
 void svg_rect(struct svg_file* s_f, float x, float y, float width, float height, char* color, struct task* task, int counter) ;
 
 struct task* new_task(char* label, int info, int thread_id, int parent_thread_id, double start_time, double cpu_time_used) ;

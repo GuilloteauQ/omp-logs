@@ -61,6 +61,10 @@ void svg_line(struct svg_file* s_f, float x1, float y1, float x2, float y2, char
     fprintf(s_f->f, "<line x1=\"%f\" y1=\"%f\" x2=\"%f\" y2=\"%f\" style=\"%s\"/>\n", x1, y1, x2, y2, style);
 }
 
+void svg_text(struct svg_file* s_f, float x, float y, char* color, char* text) {
+    fprintf(s_f->f, "<text x=\"%f\" y=\"%f\" fill=\"%s\">%s</text>\n", x, y, color, text);
+}
+
 void svg_rect(struct svg_file* s_f, float x, float y, float width, float height, char* color, struct task* task, int counter) {
     fprintf(s_f->f, "<rect class=\"task\" x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" fill=\"%s\" stroke=\"black\"/>\n", x, y, width, height, color);
     fprintf(s_f->f, "<g id=\"tip_%d\">\n<rect x=\"%f\" y=\"%f\" width=\"200\" height=\"%f\" fill=\"white\" stoke=\"black\"/>\n<text x=\"%f\" y=\"%f\">[%s] Time: %d, Info: %d</text>\n</g>\n", counter, x, y - height/4.0, height/4.0, x, y - height/8.0,task->label, (int) task->cpu_time_used, task->info);
@@ -232,10 +236,15 @@ float get_x_position(double time, double max_time, float begin_x, float end_x) {
 
 void thread_to_svg(struct task_list* l, struct svg_file* s_f, double max_time, float begin_x, float end_x, float begin_y, float task_height, char* color, int* counter) {
     update_used_time(l);
+    struct task_list* current = l;
     // Draw the line for time
     svg_line(s_f, begin_x, begin_y, end_x, begin_y, "stroke:rgb(0,0,0);stroke-width:3");
+    // Write the name of the thread
+    char* name = malloc(sizeof(char) * 9);
+    sprintf(name, "Thread %d", current->t->thread_id);
+    svg_text(s_f, (s_f->width - end_x)/2 + end_x, begin_y, "black", name);
+    free(name);
 
-    struct task_list* current = l;
 
     while (current != NULL) {
         float x = get_x_position(current->t->start_time, max_time, begin_x, end_x);
