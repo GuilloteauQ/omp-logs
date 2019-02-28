@@ -29,6 +29,10 @@ You can put the list as a global variable to be sure.
 ```c
 task_list* list = NULL;
 ```
+or with
+```c
+task_list* list = task_list_init();
+```
 
 ### 3) Log some tasks !
 
