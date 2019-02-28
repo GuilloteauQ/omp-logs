@@ -34,7 +34,7 @@ int main(int argc, char** argv) {
     int N = atoi(argv[1]);
 
     // We create the list of tasks
-    struct task_list* l = NULL;
+    task_list* l = NULL;
 
     int s = 0;
     // A nice for in parallel with openMP

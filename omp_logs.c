@@ -18,10 +18,10 @@ struct task {
 };*/
 
 /* [raw]
-struct task_list {
+typedef struct {
     struct task* t;
-    struct task_list* next;
-};*/
+    task_list* next;
+} task_list;*/
 
 struct svg_file {
     FILE* f;
@@ -130,15 +130,15 @@ void print_task(struct task* t) {
 //
 
 /* Return a new list with a single task inside */
-struct task_list* new_list(struct task* t) {
-    struct task_list* l = malloc(sizeof(struct task_list));
+task_list* new_list(struct task* t) {
+    task_list* l = malloc(sizeof(task_list));
     l->t = t;
     l->next = NULL;
     return l;
 }
 
 /* Apply recursively a function to every task in the task list */
-void apply_function(struct task_list* l, void (*f)(struct task* t)) {
+void apply_function(task_list* l, void (*f)(struct task* t)) {
     if (l != NULL) {
         f(l->t);
         apply_function(l->next, f);
@@ -146,7 +146,7 @@ void apply_function(struct task_list* l, void (*f)(struct task* t)) {
 }
 
 /* Print the list */
-void print_list(struct task_list* l) {
+void print_list(task_list* l) {
     apply_function(l, print_task);
 }
 
@@ -156,8 +156,8 @@ void print_list(struct task_list* l) {
  * Push a task in head of the list
  * We push in head because it does not really matter here
  */
-void push(struct task_list** l, struct task* t) {
-    struct task_list* new_cell = new_list(t);
+void push(task_list** l, struct task* t) {
+    task_list* new_cell = new_list(t);
     if (*l == NULL) {
         *l = new_cell;
     } else {
@@ -167,7 +167,7 @@ void push(struct task_list** l, struct task* t) {
 }
 
 /* Return the size of the list */
-int get_size(struct task_list* l) {
+int get_size(task_list* l) {
     if (l != NULL) {
         return 1 + get_size(l->next);
     } else {
@@ -176,7 +176,7 @@ int get_size(struct task_list* l) {
 }
 
 /* Free recursively the list */
-void free_list(struct task_list* l) {
+void free_list(task_list* l) {
     if (l != NULL) {
         free_list(l->next);
         free(l->t);
@@ -189,7 +189,7 @@ void free_list(struct task_list* l) {
  * Compute the time it took to achieve the task
  * Push the new task to the task list
  */
-void log_task(struct task_list** l, char* label, int size, int parent_thread,void (*f)(void* args), void* args) {
+void log_task(task_list** l, char* label, int size, int parent_thread,void (*f)(void* args), void* args) {
     int thread_id = omp_get_thread_num();
     clock_t start, end;
     double cpu_time_used;
@@ -203,9 +203,9 @@ void log_task(struct task_list** l, char* label, int size, int parent_thread,voi
 }
 
 /* Return the minimum starting time in the list */
-double get_min_time(struct task_list* l) {
+double get_min_time(task_list* l) {
     double current_min = l->t->start_time;
-    struct task_list* current = l;
+    task_list* current = l;
 
     while (current != NULL) {
         if (current->t->start_time < current_min) {
@@ -220,9 +220,9 @@ double get_min_time(struct task_list* l) {
  * Substract the minimum starting time to every starting time
  * compute the max ending time, and return it
  */
-double remap_time_and_get_max_time(struct task_list*  l, double min_time) {
+double remap_time_and_get_max_time(task_list*  l, double min_time) {
     double current_max = 0;
-    struct task_list* current = l;
+    task_list* current = l;
 
     while (current != NULL) {
         current->t->start_time = current->t->start_time - min_time;
@@ -241,14 +241,14 @@ double remap_time_and_get_max_time(struct task_list*  l, double min_time) {
  * a list per thread, where each new list has only tasks
  * that the associated thread has done
  */
-struct task_list** get_tasks_per_thread(struct task_list* l) {
+task_list** get_tasks_per_thread(task_list* l) {
     int threads_involved = omp_get_max_threads();
-    struct task_list** tasks_per_thread = malloc(threads_involved * sizeof(struct task_list*));
+    task_list** tasks_per_thread = malloc(threads_involved * sizeof(task_list*));
     for (int i = 0; i < threads_involved; i++) {
         tasks_per_thread[i] = NULL;
     }
 
-    struct task_list* current = l;
+    task_list* current = l;
 
     while (current != NULL) {
         push(&(tasks_per_thread[current->t->thread_id]), current->t);
@@ -263,12 +263,12 @@ struct task_list** get_tasks_per_thread(struct task_list* l) {
  * In this case we say that the previous task is done.
  * So we will update the time it actually used
  */
-void update_used_time(struct task_list* l) {
+void update_used_time(task_list* l) {
     int size = get_size(l);
     double* start_times = malloc(size * sizeof(double));
     double* used_times = malloc(size * sizeof(double));
 
-    struct task_list* current = l;
+    task_list* current = l;
     int i = 0;
     while (current != NULL) {
         start_times[i] = current->t->start_time;
@@ -300,9 +300,9 @@ float get_x_position(double time, double max_time, float begin_x, float end_x) {
 }
 
 /* Draw all the content for a single thread */
-void thread_to_svg(struct task_list* l, struct svg_file* s_f, double max_time, float begin_x, float end_x, float begin_y, float task_height, char* color, int* counter, int thread_id) {
+void thread_to_svg(task_list* l, struct svg_file* s_f, double max_time, float begin_x, float end_x, float begin_y, float task_height, char* color, int* counter, int thread_id) {
     update_used_time(l);
-    struct task_list* current = l;
+    task_list* current = l;
 
     // Draw the line for time
     svg_line(s_f, begin_x, begin_y, end_x, begin_y, "stroke:rgb(0,0,0);stroke-width:3");
@@ -353,7 +353,7 @@ char* thread_color(int i) {
  * split the tasks per thread
  * and draw the tasks for every thread
  */
-void tasks_to_svg(struct task_list* l, char* filename) {
+void tasks_to_svg(task_list* l, char* filename) {
     int width = 2000;
     int height = 800;
     struct svg_file* s_f = new_svg_file(filename, width, height);
@@ -363,7 +363,7 @@ void tasks_to_svg(struct task_list* l, char* filename) {
     float end_x = (float) width - 300.0;
 
     double max_time = remap_time_and_get_max_time(l, get_min_time(l));
-    struct task_list** tasks_per_thread = get_tasks_per_thread(l);
+    task_list** tasks_per_thread = get_tasks_per_thread(l);
     int counter = 0;
 
     for (int i = 0; i < thread_pool_size; i++) {

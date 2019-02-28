@@ -19,13 +19,13 @@ struct task {
 };
 
 
-struct task_list {
+typedef struct task_list {
     struct task* t;
     struct task_list* next;
-};
+} task_list;
 
-void log_task(struct task_list** l, char* label, int size, int parent_thread,void (*f)(void* args), void* args) ;
+void log_task(task_list** l, char* label, int size, int parent_thread,void (*f)(void* args), void* args) ;
 
-void tasks_to_svg(struct task_list* l, char* filename) ;
+void tasks_to_svg(task_list* l, char* filename) ;
 
 #endif

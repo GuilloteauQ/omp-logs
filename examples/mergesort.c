@@ -9,7 +9,7 @@
 
 
 // The list where tasks will be pushed
-struct task_list* l = NULL;
+task_list* l = NULL;
 
 struct data {
     int size;
