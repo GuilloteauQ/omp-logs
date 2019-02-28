@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <time.h>
 #include <string.h>
+#include <pthread.h>
 #include <omp.h>
 
 struct task {
@@ -18,13 +19,20 @@ struct task {
     struct task_list* children;
 };
 
-
-typedef struct task_list {
+struct task_cell {
     struct task* t;
-    struct task_list* next;
+    struct task_cell* next;
+};
+
+typedef struct {
+    pthread_mutex_t mutex;
+    struct task_cell* head;
 } task_list;
 
+
 void log_task(task_list** l, char* label, int size, int parent_thread,void (*f)(void* args), void* args) ;
+
+task_list* task_list_init() ;
 
 void tasks_to_svg(task_list* l, char* filename) ;
 

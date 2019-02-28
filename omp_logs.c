@@ -3,6 +3,7 @@
 #include <time.h>
 #include <string.h>
 #include <omp.h>
+#include <pthread.h>
 #include "omp_logs.h"
 
 /* [raw]
@@ -18,9 +19,16 @@ struct task {
 };*/
 
 /* [raw]
-typedef struct {
+struct task_cell {
     struct task* t;
-    task_list* next;
+    struct task_cell* next;
+};*/
+
+
+/* [raw]
+typedef struct {
+    pthread_mutex_t mutex;
+    struct task_cell* head;
 } task_list;*/
 
 struct svg_file {
@@ -129,16 +137,24 @@ void print_task(struct task* t) {
 //
 //
 
-/* Return a new list with a single task inside */
-task_list* new_list(struct task* t) {
+
+task_list* task_list_init() {
     task_list* l = malloc(sizeof(task_list));
+    pthread_mutex_init(&(l->mutex), NULL);
+    l->head = NULL;
+    return l;
+}
+
+/* Return a new list with a single task inside */
+struct task_cell* new_cell(struct task* t) {
+    struct task_cell* l = malloc(sizeof(struct task_cell));
     l->t = t;
     l->next = NULL;
     return l;
 }
 
 /* Apply recursively a function to every task in the task list */
-void apply_function(task_list* l, void (*f)(struct task* t)) {
+void apply_function(struct task_cell* l, void (*f)(struct task* t)) {
     if (l != NULL) {
         f(l->t);
         apply_function(l->next, f);
@@ -147,7 +163,7 @@ void apply_function(task_list* l, void (*f)(struct task* t)) {
 
 /* Print the list */
 void print_list(task_list* l) {
-    apply_function(l, print_task);
+    apply_function(l->head, print_task);
 }
 
 
@@ -156,32 +172,47 @@ void print_list(task_list* l) {
  * Push a task in head of the list
  * We push in head because it does not really matter here
  */
-void push(task_list** l, struct task* t) {
-    task_list* new_cell = new_list(t);
+void push_cell(struct task_cell** l, struct task* t) {
+    struct task_cell* new = new_cell(t);
     if (*l == NULL) {
-        *l = new_cell;
+        *l = new;
     } else {
-        new_cell->next = *l;
-        *l = new_cell;
+        new->next = *l;
+        *l = new;
     }
 }
 
+void push(task_list* l, struct task* t) {
+    pthread_mutex_lock(&(l->mutex));
+    push_cell(&(l->head), t);
+    pthread_mutex_unlock(&(l->mutex));
+}
+
 /* Return the size of the list */
-int get_size(task_list* l) {
+int get_size_head(struct task_cell* l) {
     if (l != NULL) {
-        return 1 + get_size(l->next);
+        return 1 + get_size_head(l->next);
     } else {
         return 0;
     }
 }
 
+int get_size(task_list* l) {
+    return get_size_head(l->head);
+}
+
 /* Free recursively the list */
-void free_list(task_list* l) {
+void free_cell(struct task_cell* l) {
     if (l != NULL) {
-        free_list(l->next);
+        free_cell(l->next);
         free(l->t);
         free(l);
     }
+}
+
+void free_list(task_list* l) {
+    free_cell(l->head);
+    free(l);
 }
 
 /*
@@ -199,13 +230,16 @@ void log_task(task_list** l, char* label, int size, int parent_thread,void (*f)(
     end = clock();
 
     cpu_time_used = ((double) (end - start));
-    push(l, new_task(label, size, thread_id, parent_thread, (double) start, cpu_time_used));
+    if (*l == NULL) {
+        *l = task_list_init();
+    }
+    push(*l, new_task(label, size, thread_id, parent_thread, (double) start, cpu_time_used));
 }
 
 /* Return the minimum starting time in the list */
 double get_min_time(task_list* l) {
-    double current_min = l->t->start_time;
-    task_list* current = l;
+    double current_min = l->head->t->start_time;
+    struct task_cell* current = l->head;
 
     while (current != NULL) {
         if (current->t->start_time < current_min) {
@@ -222,7 +256,7 @@ double get_min_time(task_list* l) {
  */
 double remap_time_and_get_max_time(task_list*  l, double min_time) {
     double current_max = 0;
-    task_list* current = l;
+    struct task_cell* current = l->head;
 
     while (current != NULL) {
         current->t->start_time = current->t->start_time - min_time;
@@ -241,17 +275,17 @@ double remap_time_and_get_max_time(task_list*  l, double min_time) {
  * a list per thread, where each new list has only tasks
  * that the associated thread has done
  */
-task_list** get_tasks_per_thread(task_list* l) {
+struct task_cell** get_tasks_per_thread(task_list* l) {
     int threads_involved = omp_get_max_threads();
-    task_list** tasks_per_thread = malloc(threads_involved * sizeof(task_list*));
+    struct task_cell** tasks_per_thread = malloc(threads_involved * sizeof(struct task_cell*));
     for (int i = 0; i < threads_involved; i++) {
         tasks_per_thread[i] = NULL;
     }
 
-    task_list* current = l;
+    struct task_cell* current = l->head;
 
     while (current != NULL) {
-        push(&(tasks_per_thread[current->t->thread_id]), current->t);
+        push_cell(&(tasks_per_thread[current->t->thread_id]), current->t);
         current = current->next;
     }
     return tasks_per_thread;
@@ -263,12 +297,12 @@ task_list** get_tasks_per_thread(task_list* l) {
  * In this case we say that the previous task is done.
  * So we will update the time it actually used
  */
-void update_used_time(task_list* l) {
-    int size = get_size(l);
+void update_used_time(struct task_cell* l) {
+    int size = get_size_head(l);
     double* start_times = malloc(size * sizeof(double));
     double* used_times = malloc(size * sizeof(double));
 
-    task_list* current = l;
+    struct task_cell* current = l;
     int i = 0;
     while (current != NULL) {
         start_times[i] = current->t->start_time;
@@ -300,9 +334,9 @@ float get_x_position(double time, double max_time, float begin_x, float end_x) {
 }
 
 /* Draw all the content for a single thread */
-void thread_to_svg(task_list* l, struct svg_file* s_f, double max_time, float begin_x, float end_x, float begin_y, float task_height, char* color, int* counter, int thread_id) {
+void thread_to_svg(struct task_cell* l, struct svg_file* s_f, double max_time, float begin_x, float end_x, float begin_y, float task_height, char* color, int* counter, int thread_id) {
     update_used_time(l);
-    task_list* current = l;
+    struct task_cell* current = l;
 
     // Draw the line for time
     svg_line(s_f, begin_x, begin_y, end_x, begin_y, "stroke:rgb(0,0,0);stroke-width:3");
@@ -363,15 +397,16 @@ void tasks_to_svg(task_list* l, char* filename) {
     float end_x = (float) width - 300.0;
 
     double max_time = remap_time_and_get_max_time(l, get_min_time(l));
-    task_list** tasks_per_thread = get_tasks_per_thread(l);
+    struct task_cell** tasks_per_thread = get_tasks_per_thread(l);
     int counter = 0;
 
     for (int i = 0; i < thread_pool_size; i++) {
         thread_to_svg(tasks_per_thread[i], s_f, max_time, begin_x, end_x, (i + 1) * h, 3 * h / 4, thread_color(i), &counter, i);
-        free_list(tasks_per_thread[i]);
+        free_cell(tasks_per_thread[i]);
     }
 
 
     close_svg(s_f);
     free(tasks_per_thread);
+    free(l);
 }

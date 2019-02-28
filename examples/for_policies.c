@@ -34,7 +34,7 @@ int main(int argc, char** argv) {
     int N = atoi(argv[1]);
 
     // We create the list of tasks
-    task_list* l = NULL;
+    task_list* l = task_list_init();
 
     int s = 0;
     // A nice for in parallel with openMP
@@ -50,7 +50,7 @@ int main(int argc, char** argv) {
     // We save the svg
     tasks_to_svg(l, "for_static.svg");
     // And we free the list of tasks
-    l = NULL;
+    l = task_list_init();
 
 
     s = 0;
@@ -61,7 +61,7 @@ int main(int argc, char** argv) {
 
     }
     tasks_to_svg(l, "for_dynamic.svg");
-    l = NULL;
+    l = task_list_init();
 
     s = 0;
     #pragma omp parallel for schedule(guided) reduction (+:s)

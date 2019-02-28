@@ -19,3 +19,5 @@ clean:
 
 clean_svg:
 	rm -f *.svg
+
+super: clean clean_svg
