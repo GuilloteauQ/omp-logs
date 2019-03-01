@@ -108,6 +108,31 @@ void svg_rect(struct svg_file* s_f, float x, float y, float width, float height,
     }
 }
 
+/* For each thread id, we assign a color */
+char* thread_color(int i) {
+    switch (i) {
+        case 0:
+            return "red";
+        case 1:
+            return "blue";
+        case 2:
+            return "green";
+        case 3:
+            return "yellow";
+        case 4:
+            return "pink";
+        case 5:
+            return "orange";
+        case 6:
+            return "tan";
+        case 7:
+            return "aquamarine";
+        default:
+            return thread_color(i % 8);
+    }
+}
+
+
 // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
 //
@@ -346,7 +371,7 @@ float get_x_position(double time, double max_time, float begin_x, float end_x) {
 }
 
 /* Draw all the content for a single thread */
-void thread_to_svg(struct task_cell* l, struct svg_file* s_f, double max_time, float begin_x, float end_x, float begin_y, float task_height, char* color, int* counter, int thread_id) {
+void thread_to_svg(struct task_cell* l, struct svg_file* s_f, double max_time, float begin_x, float end_x, float begin_y, float task_height, char* color, int* counter, int thread_id, int** defs) {
     update_used_time(l);
     struct task_cell* current = l;
 
@@ -355,41 +380,41 @@ void thread_to_svg(struct task_cell* l, struct svg_file* s_f, double max_time, f
     // Write the name of the thread
     char* name = malloc(sizeof(char) * 9);
     sprintf(name, "Thread %d", thread_id);
-    svg_text(s_f, (s_f->width - end_x)/2 + end_x, begin_y, "black", name);
+    svg_text(s_f, (s_f->width - end_x)/2 + end_x, begin_y, thread_color(thread_id), name);
     free(name);
 
+    char* fill = malloc(sizeof(char) * 15);
 
     while (current != NULL) {
+        int gradient_id = defs[current->t->parent_thread_id][current->t->thread_id];
+        sprintf(fill, "url(#grad%d)", gradient_id);
+
         float x = get_x_position(current->t->start_time, max_time, begin_x, end_x);
         float rect_width = get_x_position(current->t->cpu_time_used, max_time, begin_x, end_x);
-        svg_rect(s_f, x, begin_y - task_height / 2.0, rect_width, task_height, color, current->t, *counter);
+        svg_rect(s_f, x, begin_y - task_height / 2.0, rect_width, task_height, fill, current->t, *counter);
         current = current->next;
         (*counter)++;
     }
+    free(fill);
+}
+void write_gradient(struct svg_file* s_f, int creating_thread, int stealing_thread, int counter, int** defs) {
+    fprintf(s_f->f, "<linearGradient id=\"grad%d\" x1=\"0%%\" y1=\"0%%\" x2=\"100%%\" y2=\"0%%\">\n<stop offset=\"0%%\" style=\"stop-color:%s;stop-opacity:1\"/>\n<stop offset=\"50%%\" style=\"stop-color:%s;stop-opacity:1\"/>\n</linearGradient>\n", counter, thread_color(creating_thread), thread_color(stealing_thread));
+    defs[creating_thread][stealing_thread] = counter;
 }
 
-/* For each thread id, we assign a color */
-char* thread_color(int i) {
-    switch (i) {
-        case 0:
-            return "red";
-        case 1:
-            return "blue";
-        case 2:
-            return "green";
-        case 3:
-            return "yellow";
-        case 4:
-            return "pink";
-        case 5:
-            return "orange";
-        case 6:
-            return "tan";
-        case 7:
-            return "aquamarine";
-        default:
-            return thread_color(i % 8);
+int** define_gradients(struct svg_file* s_f, int max_thread) {
+    int counter = 0;
+    int** defs = malloc(max_thread * sizeof(int*));
+    fprintf(s_f->f, "<defs>\n");
+    for (int creating_thread = 0; creating_thread < max_thread; creating_thread++) {
+        defs[creating_thread] = malloc(max_thread * sizeof(int));
+        for (int stealing_thread = 0; stealing_thread < max_thread; stealing_thread++) {
+            write_gradient(s_f, creating_thread, stealing_thread, counter, defs);
+            counter++;
+        }
     }
+    fprintf(s_f->f, "</defs>\n");
+    return defs;
 }
 
 
@@ -402,22 +427,29 @@ char* thread_color(int i) {
 void tasks_to_svg(task_list* l, char* filename, int animated) {
     int width = 2000;
     int height = 800;
-    struct svg_file* s_f = new_svg_file(filename, width, height, animated);
     int thread_pool_size = omp_get_max_threads();
     float h = height / (float) (thread_pool_size + 1);
     float begin_x = 0.0;
     float end_x = (float) width - 300.0;
+
+    struct svg_file* s_f = new_svg_file(filename, width, height, animated);
+    int** defs = define_gradients(s_f, thread_pool_size);
+
 
     double max_time = remap_time_and_get_max_time(l, get_min_time(l));
     struct task_cell** tasks_per_thread = get_tasks_per_thread(l);
     int counter = 0;
 
     for (int i = 0; i < thread_pool_size; i++) {
-        thread_to_svg(tasks_per_thread[i], s_f, max_time, begin_x, end_x, (i + 1) * h, 3 * h / 4, thread_color(i), &counter, i);
+        thread_to_svg(tasks_per_thread[i], s_f, max_time, begin_x, end_x, (i + 1) * h, 3 * h / 4, thread_color(i), &counter, i, defs);
         free_cell(tasks_per_thread[i]);
     }
 
 
+    for (int i = 0; i < thread_pool_size; i++) {
+        free(defs[i]);
+    }
+    free(defs);
     close_svg(s_f);
     free(tasks_per_thread);
     free(l);
