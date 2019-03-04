@@ -104,7 +104,7 @@ void svg_text(struct svg_file* s_f, float x, float y, char* color, char* text) {
 void svg_rect(struct svg_file* s_f, float x, float y, float width, float height, char* color, struct task* task, int counter) {
     fprintf(s_f->f, "<rect class=\"task\" x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" fill=\"%s\" stroke=\"black\"/>\n", x, y, width, height, color);
     if (s_f->animated) {
-        fprintf(s_f->f, "<g id=\"tip_%d\">\n<rect x=\"%f\" y=\"%f\" width=\"200\" height=\"%f\" fill=\"white\" stoke=\"black\"/>\n<text x=\"%f\" y=\"%f\">[%s] Time: %llu, Info: %d, From: %d\n</text></g>\n", counter, x, y - height/4.0, height/4.0, x, y - height/8.0,task->label,  task->cpu_time_used, task->info, task->parent_thread_id);
+        fprintf(s_f->f, "<g id=\"tip_%d\">\n<rect x=\"%f\" y=\"%f\" width=\"200\" height=\"%f\" fill=\"white\" stoke=\"black\"/>\n<text x=\"%f\" y=\"%f\">[%s] Ticks: %llu, Info: %d, From: %d\n</text></g>\n", counter, x, y - height/4.0, height/4.0, x, y - height/8.0,task->label,  task->cpu_time_used, task->info, task->parent_thread_id);
     }
 }
 
