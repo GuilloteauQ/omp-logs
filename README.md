@@ -63,7 +63,7 @@ void log_task(task_list** l, char* label, int info, int parent_id, void (*f)(voi
  
  Even if this is a ```svg``` file, you'll have to open it with your browser.
  
- Here is an example (For the full experience: click on the image, and then, right click -> "View Image"):
+ Here is an example (**For the full experience**: click on the image, and then, right click -> "View Image"):
  
  ![example](https://github.com/GuilloteauQ/omp-logs/blob/master/mergesort.svg)
  
