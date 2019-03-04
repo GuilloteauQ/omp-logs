@@ -1,242 +1,548 @@
 <?xml version="1.0"?>
 <svg viewBox="0 0 2000 800" version="1.1" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="grad0" x1="0%" y1="0%" x2="100%" y2="0%">
+<stop offset="0%" style="stop-color:red;stop-opacity:1"/>
+<stop offset="50%" style="stop-color:red;stop-opacity:1"/>
+</linearGradient>
+<linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+<stop offset="0%" style="stop-color:red;stop-opacity:1"/>
+<stop offset="50%" style="stop-color:blue;stop-opacity:1"/>
+</linearGradient>
+<linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="0%">
+<stop offset="0%" style="stop-color:red;stop-opacity:1"/>
+<stop offset="50%" style="stop-color:green;stop-opacity:1"/>
+</linearGradient>
+<linearGradient id="grad3" x1="0%" y1="0%" x2="100%" y2="0%">
+<stop offset="0%" style="stop-color:red;stop-opacity:1"/>
+<stop offset="50%" style="stop-color:yellow;stop-opacity:1"/>
+</linearGradient>
+<linearGradient id="grad4" x1="0%" y1="0%" x2="100%" y2="0%">
+<stop offset="0%" style="stop-color:blue;stop-opacity:1"/>
+<stop offset="50%" style="stop-color:red;stop-opacity:1"/>
+</linearGradient>
+<linearGradient id="grad5" x1="0%" y1="0%" x2="100%" y2="0%">
+<stop offset="0%" style="stop-color:blue;stop-opacity:1"/>
+<stop offset="50%" style="stop-color:blue;stop-opacity:1"/>
+</linearGradient>
+<linearGradient id="grad6" x1="0%" y1="0%" x2="100%" y2="0%">
+<stop offset="0%" style="stop-color:blue;stop-opacity:1"/>
+<stop offset="50%" style="stop-color:green;stop-opacity:1"/>
+</linearGradient>
+<linearGradient id="grad7" x1="0%" y1="0%" x2="100%" y2="0%">
+<stop offset="0%" style="stop-color:blue;stop-opacity:1"/>
+<stop offset="50%" style="stop-color:yellow;stop-opacity:1"/>
+</linearGradient>
+<linearGradient id="grad8" x1="0%" y1="0%" x2="100%" y2="0%">
+<stop offset="0%" style="stop-color:green;stop-opacity:1"/>
+<stop offset="50%" style="stop-color:red;stop-opacity:1"/>
+</linearGradient>
+<linearGradient id="grad9" x1="0%" y1="0%" x2="100%" y2="0%">
+<stop offset="0%" style="stop-color:green;stop-opacity:1"/>
+<stop offset="50%" style="stop-color:blue;stop-opacity:1"/>
+</linearGradient>
+<linearGradient id="grad10" x1="0%" y1="0%" x2="100%" y2="0%">
+<stop offset="0%" style="stop-color:green;stop-opacity:1"/>
+<stop offset="50%" style="stop-color:green;stop-opacity:1"/>
+</linearGradient>
+<linearGradient id="grad11" x1="0%" y1="0%" x2="100%" y2="0%">
+<stop offset="0%" style="stop-color:green;stop-opacity:1"/>
+<stop offset="50%" style="stop-color:yellow;stop-opacity:1"/>
+</linearGradient>
+<linearGradient id="grad12" x1="0%" y1="0%" x2="100%" y2="0%">
+<stop offset="0%" style="stop-color:yellow;stop-opacity:1"/>
+<stop offset="50%" style="stop-color:red;stop-opacity:1"/>
+</linearGradient>
+<linearGradient id="grad13" x1="0%" y1="0%" x2="100%" y2="0%">
+<stop offset="0%" style="stop-color:yellow;stop-opacity:1"/>
+<stop offset="50%" style="stop-color:blue;stop-opacity:1"/>
+</linearGradient>
+<linearGradient id="grad14" x1="0%" y1="0%" x2="100%" y2="0%">
+<stop offset="0%" style="stop-color:yellow;stop-opacity:1"/>
+<stop offset="50%" style="stop-color:green;stop-opacity:1"/>
+</linearGradient>
+<linearGradient id="grad15" x1="0%" y1="0%" x2="100%" y2="0%">
+<stop offset="0%" style="stop-color:yellow;stop-opacity:1"/>
+<stop offset="50%" style="stop-color:yellow;stop-opacity:1"/>
+</linearGradient>
+</defs>
 <line x1="0.000000" y1="160.000000" x2="1700.000000" y2="160.000000" style="stroke:rgb(0,0,0);stroke-width:3"/>
-<text x="1850.000000" y="160.000000" fill="black">Thread 0</text>
-<rect class="task" x="0.000000" y="100.000000" width="1672.213989" height="120.000000" fill="red" stroke="black"/>
+<text x="1850.000000" y="160.000000" fill="red">Thread 0</text>
+<rect class="task" x="372.133636" y="100.000000" width="0.235354" height="120.000000" fill="url(#grad0)" stroke="black"/>
 <g id="tip_0">
-<rect x="0.000000" y="70.000000" width="200" height="30.000000" fill="white" stoke="black"/>
-<text x="0.000000" y="85.000000">[Start] Time: 1986, Info: 16, From: 0
+<rect x="372.133636" y="70.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="372.133636" y="85.000000">[Sort] Ticks: 66, Info: 1, From: 0
+</text></g>
+<rect class="task" x="464.078552" y="100.000000" width="0.274579" height="120.000000" fill="url(#grad0)" stroke="black"/>
+<g id="tip_1">
+<rect x="464.078552" y="70.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="464.078552" y="85.000000">[Sort] Ticks: 77, Info: 1, From: 0
+</text></g>
+<rect class="task" x="359.149963" y="100.000000" width="104.928589" height="120.000000" fill="url(#grad0)" stroke="black"/>
+<g id="tip_2">
+<rect x="359.149963" y="70.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="359.149963" y="85.000000">[Sort] Ticks: 29425, Info: 2, From: 0
+</text></g>
+<rect class="task" x="501.813599" y="100.000000" width="0.196128" height="120.000000" fill="url(#grad0)" stroke="black"/>
+<g id="tip_3">
+<rect x="501.813599" y="70.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="501.813599" y="85.000000">[Sort] Ticks: 55, Info: 1, From: 0
+</text></g>
+<rect class="task" x="509.815643" y="100.000000" width="0.235354" height="120.000000" fill="url(#grad0)" stroke="black"/>
+<g id="tip_4">
+<rect x="509.815643" y="70.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="509.815643" y="85.000000">[Sort] Ticks: 66, Info: 1, From: 0
+</text></g>
+<rect class="task" x="485.338837" y="100.000000" width="24.476799" height="120.000000" fill="url(#grad0)" stroke="black"/>
+<g id="tip_5">
+<rect x="485.338837" y="70.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="485.338837" y="85.000000">[Sort] Ticks: 6864, Info: 2, From: 0
+</text></g>
+<rect class="task" x="344.479553" y="100.000000" width="140.859268" height="120.000000" fill="url(#grad0)" stroke="black"/>
+<g id="tip_6">
+<rect x="344.479553" y="70.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="344.479553" y="85.000000">[Sort] Ticks: 39501, Info: 4, From: 0
+</text></g>
+<rect class="task" x="599.563904" y="100.000000" width="0.235354" height="120.000000" fill="url(#grad0)" stroke="black"/>
+<g id="tip_7">
+<rect x="599.563904" y="70.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="599.563904" y="85.000000">[Sort] Ticks: 66, Info: 1, From: 0
+</text></g>
+<rect class="task" x="604.153320" y="100.000000" width="0.196128" height="120.000000" fill="url(#grad0)" stroke="black"/>
+<g id="tip_8">
+<rect x="604.153320" y="70.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="604.153320" y="85.000000">[Sort] Ticks: 55, Info: 1, From: 0
+</text></g>
+<rect class="task" x="584.540466" y="100.000000" width="19.612820" height="120.000000" fill="url(#grad0)" stroke="black"/>
+<g id="tip_9">
+<rect x="584.540466" y="70.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="584.540466" y="85.000000">[Sort] Ticks: 5500, Info: 2, From: 0
+</text></g>
+<rect class="task" x="632.199646" y="100.000000" width="0.196128" height="120.000000" fill="url(#grad0)" stroke="black"/>
+<g id="tip_10">
+<rect x="632.199646" y="70.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="632.199646" y="85.000000">[Sort] Ticks: 55, Info: 1, From: 0
+</text></g>
+<rect class="task" x="635.808411" y="100.000000" width="0.196128" height="120.000000" fill="url(#grad0)" stroke="black"/>
+<g id="tip_11">
+<rect x="635.808411" y="70.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="635.808411" y="85.000000">[Sort] Ticks: 55, Info: 1, From: 0
+</text></g>
+<rect class="task" x="619.568970" y="100.000000" width="16.239414" height="120.000000" fill="url(#grad0)" stroke="black"/>
+<g id="tip_12">
+<rect x="619.568970" y="70.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="619.568970" y="85.000000">[Sort] Ticks: 4554, Info: 2, From: 0
+</text></g>
+<rect class="task" x="535.979126" y="100.000000" width="83.589836" height="120.000000" fill="url(#grad0)" stroke="black"/>
+<g id="tip_13">
+<rect x="535.979126" y="70.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="535.979126" y="85.000000">[Sort] Ticks: 23441, Info: 4, From: 0
+</text></g>
+<rect class="task" x="330.122986" y="100.000000" width="205.856155" height="120.000000" fill="url(#grad0)" stroke="black"/>
+<g id="tip_14">
+<rect x="330.122986" y="70.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="330.122986" y="85.000000">[Sort] Ticks: 57728, Info: 8, From: 0
+</text></g>
+<rect class="task" x="304.273285" y="100.000000" width="25.849697" height="120.000000" fill="url(#grad12)" stroke="black"/>
+<g id="tip_15">
+<rect x="304.273285" y="70.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="304.273285" y="85.000000">[Sort] Ticks: 7249, Info: 16, From: 3
+</text></g>
+<rect class="task" x="1617.194702" y="100.000000" width="2.078959" height="120.000000" fill="url(#grad8)" stroke="black"/>
+<g id="tip_16">
+<rect x="1617.194702" y="70.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1617.194702" y="85.000000">[Merge] Ticks: 583, Info: 8, From: 2
+</text></g>
+<rect class="task" x="1690.664307" y="100.000000" width="6.197651" height="120.000000" fill="url(#grad12)" stroke="black"/>
+<g id="tip_17">
+<rect x="1690.664307" y="70.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1690.664307" y="85.000000">[Merge] Ticks: 1738, Info: 32, From: 3
 </text></g>
 <line x1="0.000000" y1="320.000000" x2="1700.000000" y2="320.000000" style="stroke:rgb(0,0,0);stroke-width:3"/>
-<text x="1850.000000" y="320.000000" fill="black">Thread 1</text>
-<rect class="task" x="692.124817" y="260.000000" width="8.420010" height="120.000000" fill="blue" stroke="black"/>
-<g id="tip_1">
-<rect x="692.124817" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
-<text x="692.124817" y="245.000000">[Sort] Time: 10, Info: 1, From: 1
+<text x="1850.000000" y="320.000000" fill="blue">Thread 1</text>
+<rect class="task" x="1099.455444" y="260.000000" width="0.235354" height="120.000000" fill="url(#grad5)" stroke="black"/>
+<g id="tip_18">
+<rect x="1099.455444" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1099.455444" y="245.000000">[Sort] Ticks: 66, Info: 1, From: 1
 </text></g>
-<rect class="task" x="713.174866" y="260.000000" width="4.210005" height="120.000000" fill="blue" stroke="black"/>
-<g id="tip_2">
-<rect x="713.174866" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
-<text x="713.174866" y="245.000000">[Sort] Time: 5, Info: 1, From: 1
+<rect class="task" x="1105.221680" y="260.000000" width="0.235354" height="120.000000" fill="url(#grad5)" stroke="black"/>
+<g id="tip_19">
+<rect x="1105.221680" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1105.221680" y="245.000000">[Sort] Ticks: 66, Info: 1, From: 1
 </text></g>
-<rect class="task" x="664.338806" y="260.000000" width="48.836056" height="120.000000" fill="blue" stroke="black"/>
-<g id="tip_3">
-<rect x="664.338806" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
-<text x="664.338806" y="245.000000">[Sort] Time: 58, Info: 2, From: 1
+<rect class="task" x="1087.570068" y="260.000000" width="17.651537" height="120.000000" fill="url(#grad5)" stroke="black"/>
+<g id="tip_20">
+<rect x="1087.570068" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1087.570068" y="245.000000">[Sort] Ticks: 4950, Info: 2, From: 1
 </text></g>
-<rect class="task" x="821.792969" y="260.000000" width="15.998019" height="120.000000" fill="blue" stroke="black"/>
-<g id="tip_4">
-<rect x="821.792969" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
-<text x="821.792969" y="245.000000">[Sort] Time: 19, Info: 1, From: 1
+<rect class="task" x="1132.208862" y="260.000000" width="0.235354" height="120.000000" fill="url(#grad5)" stroke="black"/>
+<g id="tip_21">
+<rect x="1132.208862" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1132.208862" y="245.000000">[Sort] Ticks: 66, Info: 1, From: 1
 </text></g>
-<rect class="task" x="845.369019" y="260.000000" width="14.314017" height="120.000000" fill="blue" stroke="black"/>
-<g id="tip_5">
-<rect x="845.369019" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
-<text x="845.369019" y="245.000000">[Sort] Time: 17, Info: 1, From: 1
+<rect class="task" x="1136.288330" y="260.000000" width="0.196128" height="120.000000" fill="url(#grad5)" stroke="black"/>
+<g id="tip_22">
+<rect x="1136.288330" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1136.288330" y="245.000000">[Sort] Ticks: 55, Info: 1, From: 1
 </text></g>
-<rect class="task" x="764.536926" y="260.000000" width="80.832092" height="120.000000" fill="blue" stroke="black"/>
-<g id="tip_6">
-<rect x="764.536926" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
-<text x="764.536926" y="245.000000">[Sort] Time: 96, Info: 2, From: 1
+<rect class="task" x="1118.911377" y="260.000000" width="17.376959" height="120.000000" fill="url(#grad5)" stroke="black"/>
+<g id="tip_23">
+<rect x="1118.911377" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1118.911377" y="245.000000">[Sort] Ticks: 4873, Info: 2, From: 1
 </text></g>
-<rect class="task" x="631.500732" y="260.000000" width="133.036163" height="120.000000" fill="blue" stroke="black"/>
-<g id="tip_7">
-<rect x="631.500732" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
-<text x="631.500732" y="245.000000">[Sort] Time: 158, Info: 4, From: 1
+<rect class="task" x="1075.410156" y="260.000000" width="43.501236" height="120.000000" fill="url(#grad5)" stroke="black"/>
+<g id="tip_24">
+<rect x="1075.410156" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1075.410156" y="245.000000">[Sort] Ticks: 12199, Info: 4, From: 1
 </text></g>
-<rect class="task" x="137.246155" y="260.000000" width="494.254578" height="120.000000" fill="blue" stroke="black"/>
-<g id="tip_8">
-<rect x="137.246155" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
-<text x="137.246155" y="245.000000">[Sort] Time: 587, Info: 8, From: 0
+<rect class="task" x="1181.711670" y="260.000000" width="0.235354" height="120.000000" fill="url(#grad5)" stroke="black"/>
+<g id="tip_25">
+<rect x="1181.711670" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1181.711670" y="245.000000">[Sort] Ticks: 66, Info: 1, From: 1
 </text></g>
-<rect class="task" x="1691.579956" y="260.000000" width="8.420010" height="120.000000" fill="blue" stroke="black"/>
-<g id="tip_9">
-<rect x="1691.579956" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
-<text x="1691.579956" y="245.000000">[Merge] Time: 10, Info: 2, From: 3
+<rect class="task" x="1185.712646" y="260.000000" width="0.156903" height="120.000000" fill="url(#grad5)" stroke="black"/>
+<g id="tip_26">
+<rect x="1185.712646" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1185.712646" y="245.000000">[Sort] Ticks: 44, Info: 1, From: 1
+</text></g>
+<rect class="task" x="1169.316284" y="260.000000" width="16.396317" height="120.000000" fill="url(#grad5)" stroke="black"/>
+<g id="tip_27">
+<rect x="1169.316284" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1169.316284" y="245.000000">[Sort] Ticks: 4598, Info: 2, From: 1
+</text></g>
+<rect class="task" x="1209.993286" y="260.000000" width="0.196128" height="120.000000" fill="url(#grad5)" stroke="black"/>
+<g id="tip_28">
+<rect x="1209.993286" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1209.993286" y="245.000000">[Sort] Ticks: 55, Info: 1, From: 1
+</text></g>
+<rect class="task" x="1213.562866" y="260.000000" width="0.156903" height="120.000000" fill="url(#grad5)" stroke="black"/>
+<g id="tip_29">
+<rect x="1213.562866" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1213.562866" y="245.000000">[Sort] Ticks: 44, Info: 1, From: 1
+</text></g>
+<rect class="task" x="1197.284180" y="260.000000" width="16.278641" height="120.000000" fill="url(#grad5)" stroke="black"/>
+<g id="tip_30">
+<rect x="1197.284180" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1197.284180" y="245.000000">[Sort] Ticks: 4565, Info: 2, From: 1
+</text></g>
+<rect class="task" x="1156.528809" y="260.000000" width="40.755440" height="120.000000" fill="url(#grad5)" stroke="black"/>
+<g id="tip_31">
+<rect x="1156.528809" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1156.528809" y="245.000000">[Sort] Ticks: 11429, Info: 4, From: 1
+</text></g>
+<rect class="task" x="404.769379" y="260.000000" width="751.759399" height="120.000000" fill="url(#grad13)" stroke="black"/>
+<g id="tip_32">
+<rect x="404.769379" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="404.769379" y="245.000000">[Sort] Ticks: 210815, Info: 8, From: 3
+</text></g>
+<rect class="task" x="1270.087036" y="260.000000" width="29.419230" height="120.000000" fill="url(#grad13)" stroke="black"/>
+<g id="tip_33">
+<rect x="1270.087036" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1270.087036" y="245.000000">[Merge] Ticks: 8250, Info: 2, From: 3
+</text></g>
+<rect class="task" x="1303.624878" y="260.000000" width="2.549667" height="120.000000" fill="url(#grad1)" stroke="black"/>
+<g id="tip_34">
+<rect x="1303.624878" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1303.624878" y="245.000000">[Merge] Ticks: 715, Info: 2, From: 0
+</text></g>
+<rect class="task" x="1310.018677" y="260.000000" width="1.098318" height="120.000000" fill="url(#grad13)" stroke="black"/>
+<g id="tip_35">
+<rect x="1310.018677" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1310.018677" y="245.000000">[Merge] Ticks: 308, Info: 2, From: 3
+</text></g>
+<rect class="task" x="1314.411987" y="260.000000" width="1.372897" height="120.000000" fill="url(#grad13)" stroke="black"/>
+<g id="tip_36">
+<rect x="1314.411987" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1314.411987" y="245.000000">[Merge] Ticks: 385, Info: 4, From: 3
+</text></g>
+<rect class="task" x="1319.079834" y="260.000000" width="1.294446" height="120.000000" fill="url(#grad1)" stroke="black"/>
+<g id="tip_37">
+<rect x="1319.079834" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1319.079834" y="245.000000">[Merge] Ticks: 363, Info: 2, From: 0
+</text></g>
+<rect class="task" x="1323.826172" y="260.000000" width="1.451349" height="120.000000" fill="url(#grad1)" stroke="black"/>
+<g id="tip_38">
+<rect x="1323.826172" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1323.826172" y="245.000000">[Merge] Ticks: 407, Info: 4, From: 0
+</text></g>
+<rect class="task" x="1329.788452" y="260.000000" width="1.215995" height="120.000000" fill="url(#grad13)" stroke="black"/>
+<g id="tip_39">
+<rect x="1329.788452" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1329.788452" y="245.000000">[Merge] Ticks: 341, Info: 2, From: 3
+</text></g>
+<rect class="task" x="1340.928467" y="260.000000" width="1.294446" height="120.000000" fill="url(#grad13)" stroke="black"/>
+<g id="tip_40">
+<rect x="1340.928467" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1340.928467" y="245.000000">[Merge] Ticks: 363, Info: 2, From: 3
+</text></g>
+<rect class="task" x="1345.792480" y="260.000000" width="1.255220" height="120.000000" fill="url(#grad13)" stroke="black"/>
+<g id="tip_41">
+<rect x="1345.792480" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1345.792480" y="245.000000">[Merge] Ticks: 352, Info: 4, From: 3
+</text></g>
+<rect class="task" x="1350.460327" y="260.000000" width="1.686702" height="120.000000" fill="url(#grad13)" stroke="black"/>
+<g id="tip_42">
+<rect x="1350.460327" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1350.460327" y="245.000000">[Merge] Ticks: 473, Info: 8, From: 3
+</text></g>
+<rect class="task" x="1360.502075" y="260.000000" width="1.294446" height="120.000000" fill="url(#grad1)" stroke="black"/>
+<g id="tip_43">
+<rect x="1360.502075" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1360.502075" y="245.000000">[Merge] Ticks: 363, Info: 2, From: 0
+</text></g>
+<rect class="task" x="1365.130737" y="260.000000" width="1.215995" height="120.000000" fill="url(#grad1)" stroke="black"/>
+<g id="tip_44">
+<rect x="1365.130737" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1365.130737" y="245.000000">[Merge] Ticks: 341, Info: 2, From: 0
+</text></g>
+<rect class="task" x="1370.661499" y="260.000000" width="1.255220" height="120.000000" fill="url(#grad1)" stroke="black"/>
+<g id="tip_45">
+<rect x="1370.661499" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1370.661499" y="245.000000">[Merge] Ticks: 352, Info: 4, From: 0
+</text></g>
+<rect class="task" x="1375.368652" y="260.000000" width="1.372897" height="120.000000" fill="url(#grad1)" stroke="black"/>
+<g id="tip_46">
+<rect x="1375.368652" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1375.368652" y="245.000000">[Merge] Ticks: 385, Info: 8, From: 0
+</text></g>
+<rect class="task" x="1380.389526" y="260.000000" width="1.255220" height="120.000000" fill="url(#grad5)" stroke="black"/>
+<g id="tip_47">
+<rect x="1380.389526" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1380.389526" y="245.000000">[Merge] Ticks: 352, Info: 2, From: 1
+</text></g>
+<rect class="task" x="1386.312500" y="260.000000" width="1.922056" height="120.000000" fill="url(#grad5)" stroke="black"/>
+<g id="tip_48">
+<rect x="1386.312500" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1386.312500" y="245.000000">[Merge] Ticks: 539, Info: 2, From: 1
+</text></g>
+<rect class="task" x="1397.178101" y="260.000000" width="1.215995" height="120.000000" fill="url(#grad5)" stroke="black"/>
+<g id="tip_49">
+<rect x="1397.178101" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1397.178101" y="245.000000">[Merge] Ticks: 341, Info: 4, From: 1
+</text></g>
+<rect class="task" x="1402.787354" y="260.000000" width="1.686702" height="120.000000" fill="url(#grad5)" stroke="black"/>
+<g id="tip_50">
+<rect x="1402.787354" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1402.787354" y="245.000000">[Merge] Ticks: 473, Info: 2, From: 1
+</text></g>
+<rect class="task" x="1407.965088" y="260.000000" width="1.647477" height="120.000000" fill="url(#grad5)" stroke="black"/>
+<g id="tip_51">
+<rect x="1407.965088" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1407.965088" y="245.000000">[Merge] Ticks: 462, Info: 2, From: 1
+</text></g>
+<rect class="task" x="1413.142944" y="260.000000" width="1.255220" height="120.000000" fill="url(#grad5)" stroke="black"/>
+<g id="tip_52">
+<rect x="1413.142944" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1413.142944" y="245.000000">[Merge] Ticks: 352, Info: 4, From: 1
+</text></g>
+<rect class="task" x="1418.556030" y="260.000000" width="1.882831" height="120.000000" fill="url(#grad5)" stroke="black"/>
+<g id="tip_53">
+<rect x="1418.556030" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1418.556030" y="245.000000">[Merge] Ticks: 528, Info: 8, From: 1
+</text></g>
+<rect class="task" x="1424.949829" y="260.000000" width="2.510441" height="120.000000" fill="url(#grad9)" stroke="black"/>
+<g id="tip_54">
+<rect x="1424.949829" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1424.949829" y="245.000000">[Merge] Ticks: 704, Info: 2, From: 2
+</text></g>
+<rect class="task" x="1432.206543" y="260.000000" width="1.372897" height="120.000000" fill="url(#grad9)" stroke="black"/>
+<g id="tip_55">
+<rect x="1432.206543" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1432.206543" y="245.000000">[Merge] Ticks: 385, Info: 2, From: 2
+</text></g>
+<rect class="task" x="1446.014038" y="260.000000" width="1.294446" height="120.000000" fill="url(#grad9)" stroke="black"/>
+<g id="tip_56">
+<rect x="1446.014038" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1446.014038" y="245.000000">[Merge] Ticks: 363, Info: 4, From: 2
+</text></g>
+<rect class="task" x="1470.961548" y="260.000000" width="0.196128" height="120.000000" fill="url(#grad5)" stroke="black"/>
+<g id="tip_57">
+<rect x="1470.961548" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1470.961548" y="245.000000">[Sort] Ticks: 55, Info: 1, From: 1
+</text></g>
+<rect class="task" x="1475.354736" y="260.000000" width="0.235354" height="120.000000" fill="url(#grad5)" stroke="black"/>
+<g id="tip_58">
+<rect x="1475.354736" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1475.354736" y="245.000000">[Sort] Ticks: 66, Info: 1, From: 1
+</text></g>
+<rect class="task" x="1456.526489" y="260.000000" width="18.828306" height="120.000000" fill="url(#grad9)" stroke="black"/>
+<g id="tip_59">
+<rect x="1456.526489" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1456.526489" y="245.000000">[Sort] Ticks: 5280, Info: 2, From: 2
+</text></g>
+<rect class="task" x="1550.785645" y="260.000000" width="1.922056" height="120.000000" fill="url(#grad9)" stroke="black"/>
+<g id="tip_60">
+<rect x="1550.785645" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1550.785645" y="245.000000">[Merge] Ticks: 539, Info: 2, From: 2
+</text></g>
+<rect class="task" x="1558.317017" y="260.000000" width="1.372897" height="120.000000" fill="url(#grad5)" stroke="black"/>
+<g id="tip_61">
+<rect x="1558.317017" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1558.317017" y="245.000000">[Merge] Ticks: 385, Info: 2, From: 1
+</text></g>
+<rect class="task" x="1662.657227" y="260.000000" width="3.138051" height="120.000000" fill="url(#grad13)" stroke="black"/>
+<g id="tip_62">
+<rect x="1662.657227" y="230.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1662.657227" y="245.000000">[Merge] Ticks: 880, Info: 16, From: 3
 </text></g>
 <line x1="0.000000" y1="480.000000" x2="1700.000000" y2="480.000000" style="stroke:rgb(0,0,0);stroke-width:3"/>
-<text x="1850.000000" y="480.000000" fill="black">Thread 2</text>
-<rect class="task" x="648.340759" y="420.000000" width="21.050024" height="120.000000" fill="green" stroke="black"/>
-<g id="tip_10">
-<rect x="648.340759" y="390.000000" width="200" height="30.000000" fill="white" stoke="black"/>
-<text x="648.340759" y="405.000000">[Sort] Time: 25, Info: 1, From: 2
+<text x="1850.000000" y="480.000000" fill="green">Thread 2</text>
+<rect class="task" x="1329.592285" y="420.000000" width="0.235354" height="120.000000" fill="url(#grad10)" stroke="black"/>
+<g id="tip_63">
+<rect x="1329.592285" y="390.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1329.592285" y="405.000000">[Sort] Ticks: 66, Info: 1, From: 2
 </text></g>
-<rect class="task" x="692.124817" y="420.000000" width="8.420010" height="120.000000" fill="green" stroke="black"/>
-<g id="tip_11">
-<rect x="692.124817" y="390.000000" width="200" height="30.000000" fill="white" stoke="black"/>
-<text x="692.124817" y="405.000000">[Sort] Time: 10, Info: 1, From: 2
+<rect class="task" x="1339.908569" y="420.000000" width="0.196128" height="120.000000" fill="url(#grad10)" stroke="black"/>
+<g id="tip_64">
+<rect x="1339.908569" y="390.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1339.908569" y="405.000000">[Sort] Ticks: 55, Info: 1, From: 2
 </text></g>
-<rect class="task" x="631.500732" y="420.000000" width="60.624073" height="120.000000" fill="green" stroke="black"/>
-<g id="tip_12">
-<rect x="631.500732" y="390.000000" width="200" height="30.000000" fill="white" stoke="black"/>
-<text x="631.500732" y="405.000000">[Sort] Time: 72, Info: 2, From: 2
+<rect class="task" x="1315.941772" y="420.000000" width="23.966866" height="120.000000" fill="url(#grad10)" stroke="black"/>
+<g id="tip_65">
+<rect x="1315.941772" y="390.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1315.941772" y="405.000000">[Sort] Ticks: 6721, Info: 2, From: 2
 </text></g>
-<rect class="task" x="778.850891" y="420.000000" width="4.210005" height="120.000000" fill="green" stroke="black"/>
-<g id="tip_13">
-<rect x="778.850891" y="390.000000" width="200" height="30.000000" fill="white" stoke="black"/>
-<text x="778.850891" y="405.000000">[Sort] Time: 5, Info: 1, From: 2
+<rect class="task" x="1373.328857" y="420.000000" width="0.235354" height="120.000000" fill="url(#grad10)" stroke="black"/>
+<g id="tip_66">
+<rect x="1373.328857" y="390.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1373.328857" y="405.000000">[Sort] Ticks: 66, Info: 1, From: 2
 </text></g>
-<rect class="task" x="790.638916" y="420.000000" width="4.210005" height="120.000000" fill="green" stroke="black"/>
-<g id="tip_14">
-<rect x="790.638916" y="390.000000" width="200" height="30.000000" fill="white" stoke="black"/>
-<text x="790.638916" y="405.000000">[Sort] Time: 5, Info: 1, From: 2
+<rect class="task" x="1377.761353" y="420.000000" width="0.156903" height="120.000000" fill="url(#grad10)" stroke="black"/>
+<g id="tip_67">
+<rect x="1377.761353" y="390.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1377.761353" y="405.000000">[Sort] Ticks: 44, Info: 1, From: 2
 </text></g>
-<rect class="task" x="745.170898" y="420.000000" width="45.468052" height="120.000000" fill="green" stroke="black"/>
-<g id="tip_15">
-<rect x="745.170898" y="390.000000" width="200" height="30.000000" fill="white" stoke="black"/>
-<text x="745.170898" y="405.000000">[Sort] Time: 54, Info: 2, From: 2
+<rect class="task" x="1358.540771" y="420.000000" width="19.220564" height="120.000000" fill="url(#grad10)" stroke="black"/>
+<g id="tip_68">
+<rect x="1358.540771" y="390.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1358.540771" y="405.000000">[Sort] Ticks: 5390, Info: 2, From: 2
 </text></g>
-<rect class="task" x="263.546295" y="420.000000" width="481.624573" height="120.000000" fill="green" stroke="black"/>
-<g id="tip_16">
-<rect x="263.546295" y="390.000000" width="200" height="30.000000" fill="white" stoke="black"/>
-<text x="263.546295" y="405.000000">[Sort] Time: 572, Info: 4, From: 3
+<rect class="task" x="1301.781250" y="420.000000" width="56.759502" height="120.000000" fill="url(#grad10)" stroke="black"/>
+<g id="tip_69">
+<rect x="1301.781250" y="390.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1301.781250" y="405.000000">[Sort] Ticks: 15917, Info: 4, From: 2
 </text></g>
-<rect class="task" x="1032.293213" y="420.000000" width="26.944031" height="120.000000" fill="green" stroke="black"/>
-<g id="tip_17">
-<rect x="1032.293213" y="390.000000" width="200" height="30.000000" fill="white" stoke="black"/>
-<text x="1032.293213" y="405.000000">[Merge] Time: 32, Info: 2, From: 3
+<rect class="task" x="1436.207520" y="420.000000" width="0.196128" height="120.000000" fill="url(#grad10)" stroke="black"/>
+<g id="tip_70">
+<rect x="1436.207520" y="390.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1436.207520" y="405.000000">[Sort] Ticks: 55, Info: 1, From: 2
 </text></g>
-<rect class="task" x="1100.495239" y="420.000000" width="10.104012" height="120.000000" fill="green" stroke="black"/>
-<g id="tip_18">
-<rect x="1100.495239" y="390.000000" width="200" height="30.000000" fill="white" stoke="black"/>
-<text x="1100.495239" y="405.000000">[Merge] Time: 12, Info: 2, From: 2
+<rect class="task" x="1447.190796" y="420.000000" width="0.156903" height="120.000000" fill="url(#grad10)" stroke="black"/>
+<g id="tip_71">
+<rect x="1447.190796" y="390.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1447.190796" y="405.000000">[Sort] Ticks: 44, Info: 1, From: 2
 </text></g>
-<rect class="task" x="1127.439331" y="420.000000" width="10.946012" height="120.000000" fill="green" stroke="black"/>
-<g id="tip_19">
-<rect x="1127.439331" y="390.000000" width="200" height="30.000000" fill="white" stoke="black"/>
-<text x="1127.439331" y="405.000000">[Merge] Time: 13, Info: 2, From: 1
+<rect class="task" x="1419.771973" y="420.000000" width="27.418722" height="120.000000" fill="url(#grad10)" stroke="black"/>
+<g id="tip_72">
+<rect x="1419.771973" y="390.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1419.771973" y="405.000000">[Sort] Ticks: 7689, Info: 2, From: 2
 </text></g>
-<rect class="task" x="1151.015381" y="420.000000" width="50.520058" height="120.000000" fill="green" stroke="black"/>
-<g id="tip_20">
-<rect x="1151.015381" y="390.000000" width="200" height="30.000000" fill="white" stoke="black"/>
-<text x="1151.015381" y="405.000000">[Merge] Time: 60, Info: 2, From: 2
+<rect class="task" x="1404.905518" y="420.000000" width="14.866517" height="120.000000" fill="url(#grad10)" stroke="black"/>
+<g id="tip_73">
+<rect x="1404.905518" y="390.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1404.905518" y="405.000000">[Sort] Ticks: 4169, Info: 4, From: 2
 </text></g>
-<rect class="task" x="1247.003418" y="420.000000" width="5.894007" height="120.000000" fill="green" stroke="black"/>
-<g id="tip_21">
-<rect x="1247.003418" y="390.000000" width="200" height="30.000000" fill="white" stoke="black"/>
-<text x="1247.003418" y="405.000000">[Merge] Time: 7, Info: 8, From: 1
+<rect class="task" x="646.791565" y="420.000000" width="758.113953" height="120.000000" fill="url(#grad2)" stroke="black"/>
+<g id="tip_74">
+<rect x="646.791565" y="390.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="646.791565" y="405.000000">[Sort] Ticks: 212597, Info: 8, From: 0
+</text></g>
+<rect class="task" x="1609.114136" y="420.000000" width="5.138559" height="120.000000" fill="url(#grad10)" stroke="black"/>
+<g id="tip_75">
+<rect x="1609.114136" y="390.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1609.114136" y="405.000000">[Merge] Ticks: 1441, Info: 4, From: 2
+</text></g>
+<rect class="task" x="1619.430542" y="420.000000" width="5.020882" height="120.000000" fill="url(#grad2)" stroke="black"/>
+<g id="tip_76">
+<rect x="1619.430542" y="390.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="1619.430542" y="405.000000">[Merge] Ticks: 1408, Info: 16, From: 0
 </text></g>
 <line x1="0.000000" y1="640.000000" x2="1700.000000" y2="640.000000" style="stroke:rgb(0,0,0);stroke-width:3"/>
-<text x="1850.000000" y="640.000000" fill="black">Thread 3</text>
-<rect class="task" x="266.914307" y="580.000000" width="0.842001" height="120.000000" fill="yellow" stroke="black"/>
-<g id="tip_22">
-<rect x="266.914307" y="550.000000" width="200" height="30.000000" fill="white" stoke="black"/>
-<text x="266.914307" y="565.000000">[Sort] Time: 1, Info: 1, From: 3
+<text x="1850.000000" y="640.000000" fill="yellow">Thread 3</text>
+<rect class="task" x="356.717957" y="580.000000" width="0.235354" height="120.000000" fill="url(#grad15)" stroke="black"/>
+<g id="tip_77">
+<rect x="356.717957" y="550.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="356.717957" y="565.000000">[Sort] Ticks: 66, Info: 1, From: 3
 </text></g>
-<rect class="task" x="274.492310" y="580.000000" width="0.842001" height="120.000000" fill="yellow" stroke="black"/>
-<g id="tip_23">
-<rect x="274.492310" y="550.000000" width="200" height="30.000000" fill="white" stoke="black"/>
-<text x="274.492310" y="565.000000">[Sort] Time: 1, Info: 1, From: 3
+<rect class="task" x="438.307312" y="580.000000" width="0.235354" height="120.000000" fill="url(#grad15)" stroke="black"/>
+<g id="tip_78">
+<rect x="438.307312" y="550.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="438.307312" y="565.000000">[Sort] Ticks: 66, Info: 1, From: 3
 </text></g>
-<rect class="task" x="263.546295" y="580.000000" width="10.946012" height="120.000000" fill="yellow" stroke="black"/>
-<g id="tip_24">
-<rect x="263.546295" y="550.000000" width="200" height="30.000000" fill="white" stoke="black"/>
-<text x="263.546295" y="565.000000">[Sort] Time: 13, Info: 2, From: 3
+<rect class="task" x="342.439850" y="580.000000" width="95.867462" height="120.000000" fill="url(#grad15)" stroke="black"/>
+<g id="tip_79">
+<rect x="342.439850" y="550.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="342.439850" y="565.000000">[Sort] Ticks: 26884, Info: 2, From: 3
 </text></g>
-<rect class="task" x="409.212494" y="580.000000" width="1.684002" height="120.000000" fill="yellow" stroke="black"/>
-<g id="tip_25">
-<rect x="409.212494" y="550.000000" width="200" height="30.000000" fill="white" stoke="black"/>
-<text x="409.212494" y="565.000000">[Sort] Time: 2, Info: 1, From: 3
+<rect class="task" x="471.806000" y="580.000000" width="0.156903" height="120.000000" fill="url(#grad15)" stroke="black"/>
+<g id="tip_80">
+<rect x="471.806000" y="550.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="471.806000" y="565.000000">[Sort] Ticks: 44, Info: 1, From: 3
 </text></g>
-<rect class="task" x="412.580475" y="580.000000" width="1.684002" height="120.000000" fill="yellow" stroke="black"/>
-<g id="tip_26">
-<rect x="412.580475" y="550.000000" width="200" height="30.000000" fill="white" stoke="black"/>
-<text x="412.580475" y="565.000000">[Sort] Time: 2, Info: 1, From: 3
+<rect class="task" x="477.415253" y="580.000000" width="0.156903" height="120.000000" fill="url(#grad15)" stroke="black"/>
+<g id="tip_81">
+<rect x="477.415253" y="550.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="477.415253" y="565.000000">[Sort] Ticks: 44, Info: 1, From: 3
 </text></g>
-<rect class="task" x="280.386322" y="580.000000" width="132.194153" height="120.000000" fill="yellow" stroke="black"/>
-<g id="tip_27">
-<rect x="280.386322" y="550.000000" width="200" height="30.000000" fill="white" stoke="black"/>
-<text x="280.386322" y="565.000000">[Sort] Time: 157, Info: 2, From: 3
+<rect class="task" x="457.253296" y="580.000000" width="20.161980" height="120.000000" fill="url(#grad15)" stroke="black"/>
+<g id="tip_82">
+<rect x="457.253296" y="550.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="457.253296" y="565.000000">[Sort] Ticks: 5654, Info: 2, From: 3
 </text></g>
-<rect class="task" x="167.558197" y="580.000000" width="112.828133" height="120.000000" fill="yellow" stroke="black"/>
-<g id="tip_28">
-<rect x="167.558197" y="550.000000" width="200" height="30.000000" fill="white" stoke="black"/>
-<text x="167.558197" y="565.000000">[Sort] Time: 134, Info: 4, From: 3
+<rect class="task" x="328.044037" y="580.000000" width="129.209259" height="120.000000" fill="url(#grad15)" stroke="black"/>
+<g id="tip_83">
+<rect x="328.044037" y="550.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="328.044037" y="565.000000">[Sort] Ticks: 36234, Info: 4, From: 3
 </text></g>
-<rect class="task" x="28.628035" y="580.000000" width="138.930161" height="120.000000" fill="yellow" stroke="black"/>
-<g id="tip_29">
-<rect x="28.628035" y="550.000000" width="200" height="30.000000" fill="white" stoke="black"/>
-<text x="28.628035" y="565.000000">[Sort] Time: 165, Info: 8, From: 0
+<rect class="task" x="541.274597" y="580.000000" width="0.156903" height="120.000000" fill="url(#grad15)" stroke="black"/>
+<g id="tip_84">
+<rect x="541.274597" y="550.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="541.274597" y="565.000000">[Sort] Ticks: 44, Info: 1, From: 3
 </text></g>
-<rect class="task" x="1035.661255" y="580.000000" width="15.156018" height="120.000000" fill="yellow" stroke="black"/>
-<g id="tip_30">
-<rect x="1035.661255" y="550.000000" width="200" height="30.000000" fill="white" stoke="black"/>
-<text x="1035.661255" y="565.000000">[Merge] Time: 18, Info: 2, From: 3
+<rect class="task" x="545.197144" y="580.000000" width="0.196128" height="120.000000" fill="url(#grad15)" stroke="black"/>
+<g id="tip_85">
+<rect x="545.197144" y="550.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="545.197144" y="565.000000">[Sort] Ticks: 55, Info: 1, From: 3
 </text></g>
-<rect class="task" x="1059.237305" y="580.000000" width="1.684002" height="120.000000" fill="yellow" stroke="black"/>
-<g id="tip_31">
-<rect x="1059.237305" y="550.000000" width="200" height="30.000000" fill="white" stoke="black"/>
-<text x="1059.237305" y="565.000000">[Merge] Time: 2, Info: 4, From: 3
+<rect class="task" x="527.349487" y="580.000000" width="17.847666" height="120.000000" fill="url(#grad15)" stroke="black"/>
+<g id="tip_86">
+<rect x="527.349487" y="550.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="527.349487" y="565.000000">[Sort] Ticks: 5005, Info: 2, From: 3
 </text></g>
-<rect class="task" x="1087.023315" y="580.000000" width="15.156018" height="120.000000" fill="yellow" stroke="black"/>
-<g id="tip_32">
-<rect x="1087.023315" y="550.000000" width="200" height="30.000000" fill="white" stoke="black"/>
-<text x="1087.023315" y="565.000000">[Sort] Time: 18, Info: 1, From: 3
+<rect class="task" x="570.497681" y="580.000000" width="0.196128" height="120.000000" fill="url(#grad15)" stroke="black"/>
+<g id="tip_87">
+<rect x="570.497681" y="550.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="570.497681" y="565.000000">[Sort] Ticks: 55, Info: 1, From: 3
 </text></g>
-<rect class="task" x="1103.863281" y="580.000000" width="0.842001" height="120.000000" fill="yellow" stroke="black"/>
-<g id="tip_33">
-<rect x="1103.863281" y="550.000000" width="200" height="30.000000" fill="white" stoke="black"/>
-<text x="1103.863281" y="565.000000">[Sort] Time: 1, Info: 1, From: 3
+<rect class="task" x="574.028015" y="580.000000" width="0.196128" height="120.000000" fill="url(#grad15)" stroke="black"/>
+<g id="tip_88">
+<rect x="574.028015" y="550.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="574.028015" y="565.000000">[Sort] Ticks: 55, Info: 1, From: 3
 </text></g>
-<rect class="task" x="1068.499268" y="580.000000" width="35.364040" height="120.000000" fill="yellow" stroke="black"/>
-<g id="tip_34">
-<rect x="1068.499268" y="550.000000" width="200" height="30.000000" fill="white" stoke="black"/>
-<text x="1068.499268" y="565.000000">[Sort] Time: 42, Info: 2, From: 3
+<rect class="task" x="557.553223" y="580.000000" width="16.474770" height="120.000000" fill="url(#grad15)" stroke="black"/>
+<g id="tip_89">
+<rect x="557.553223" y="550.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="557.553223" y="565.000000">[Sort] Ticks: 4620, Info: 2, From: 3
 </text></g>
-<rect class="task" x="1119.019287" y="580.000000" width="8.420010" height="120.000000" fill="yellow" stroke="black"/>
-<g id="tip_35">
-<rect x="1119.019287" y="550.000000" width="200" height="30.000000" fill="white" stoke="black"/>
-<text x="1119.019287" y="565.000000">[Sort] Time: 10, Info: 1, From: 3
+<rect class="task" x="512.286865" y="580.000000" width="45.266388" height="120.000000" fill="url(#grad15)" stroke="black"/>
+<g id="tip_90">
+<rect x="512.286865" y="550.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="512.286865" y="565.000000">[Sort] Ticks: 12694, Info: 4, From: 3
 </text></g>
-<rect class="task" x="1129.123291" y="580.000000" width="0.842001" height="120.000000" fill="yellow" stroke="black"/>
-<g id="tip_36">
-<rect x="1129.123291" y="550.000000" width="200" height="30.000000" fill="white" stoke="black"/>
-<text x="1129.123291" y="565.000000">[Sort] Time: 1, Info: 1, From: 3
+<rect class="task" x="314.746521" y="580.000000" width="197.540329" height="120.000000" fill="url(#grad15)" stroke="black"/>
+<g id="tip_91">
+<rect x="314.746521" y="550.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="314.746521" y="565.000000">[Sort] Ticks: 55396, Info: 8, From: 3
 </text></g>
-<rect class="task" x="1114.809326" y="580.000000" width="14.314017" height="120.000000" fill="yellow" stroke="black"/>
-<g id="tip_37">
-<rect x="1114.809326" y="550.000000" width="200" height="30.000000" fill="white" stoke="black"/>
-<text x="1114.809326" y="565.000000">[Sort] Time: 17, Info: 2, From: 3
+<rect class="task" x="271.951355" y="580.000000" width="42.795174" height="120.000000" fill="url(#grad15)" stroke="black"/>
+<g id="tip_92">
+<rect x="271.951355" y="550.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="271.951355" y="565.000000">[Sort] Ticks: 12001, Info: 16, From: 3
 </text></g>
-<rect class="task" x="1063.447266" y="580.000000" width="51.362061" height="120.000000" fill="yellow" stroke="black"/>
-<g id="tip_38">
-<rect x="1063.447266" y="550.000000" width="200" height="30.000000" fill="white" stoke="black"/>
-<text x="1063.447266" y="565.000000">[Sort] Time: 61, Info: 4, From: 1
-</text></g>
-<rect class="task" x="1144.279297" y="580.000000" width="7.578009" height="120.000000" fill="yellow" stroke="black"/>
-<g id="tip_39">
-<rect x="1144.279297" y="550.000000" width="200" height="30.000000" fill="white" stoke="black"/>
-<text x="1144.279297" y="565.000000">[Merge] Time: 9, Info: 4, From: 2
-</text></g>
-<rect class="task" x="1154.383301" y="580.000000" width="1.684002" height="120.000000" fill="yellow" stroke="black"/>
-<g id="tip_40">
-<rect x="1154.383301" y="550.000000" width="200" height="30.000000" fill="white" stoke="black"/>
-<text x="1154.383301" y="565.000000">[Merge] Time: 2, Info: 8, From: 3
-</text></g>
-<rect class="task" x="1191.431396" y="580.000000" width="0.842001" height="120.000000" fill="yellow" stroke="black"/>
-<g id="tip_41">
-<rect x="1191.431396" y="550.000000" width="200" height="30.000000" fill="white" stoke="black"/>
-<text x="1191.431396" y="565.000000">[Merge] Time: 1, Info: 2, From: 1
-</text></g>
-<rect class="task" x="1204.903442" y="580.000000" width="1.684002" height="120.000000" fill="yellow" stroke="black"/>
-<g id="tip_42">
-<rect x="1204.903442" y="550.000000" width="200" height="30.000000" fill="white" stoke="black"/>
-<text x="1204.903442" y="565.000000">[Merge] Time: 2, Info: 4, From: 1
-</text></g>
-<rect class="task" x="1210.797485" y="580.000000" width="0.842001" height="120.000000" fill="yellow" stroke="black"/>
-<g id="tip_43">
-<rect x="1210.797485" y="550.000000" width="200" height="30.000000" fill="white" stoke="black"/>
-<text x="1210.797485" y="565.000000">[Merge] Time: 1, Info: 2, From: 3
-</text></g>
-<rect class="task" x="1213.323486" y="580.000000" width="1.684002" height="120.000000" fill="yellow" stroke="black"/>
-<g id="tip_44">
-<rect x="1213.323486" y="550.000000" width="200" height="30.000000" fill="white" stoke="black"/>
-<text x="1213.323486" y="565.000000">[Merge] Time: 2, Info: 4, From: 3
-</text></g>
-<rect class="task" x="1267.211548" y="580.000000" width="406.686493" height="120.000000" fill="yellow" stroke="black"/>
-<g id="tip_45">
-<rect x="1267.211548" y="550.000000" width="200" height="30.000000" fill="white" stoke="black"/>
-<text x="1267.211548" y="565.000000">[Merge] Time: 483, Info: 16, From: 0
+<rect class="task" x="0.000000" y="580.000000" width="271.951355" height="120.000000" fill="url(#grad15)" stroke="black"/>
+<g id="tip_93">
+<rect x="0.000000" y="550.000000" width="200" height="30.000000" fill="white" stoke="black"/>
+<text x="0.000000" y="565.000000">[Start] Ticks: 76263, Info: 32, From: 3
 </text></g>
 <script>
 <![CDATA[
