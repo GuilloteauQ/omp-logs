@@ -1,18 +1,19 @@
+CC = gcc
+LD = gcc
+
+CFLAGS = -Wall -Wextra -O2 -g -std=c99 -fopenmp
+LDFLAGS = -L../ -lomp_logs -fopenmp
+
 all: mergesort for_policies
 
-
 mergesort: mergesort.o
-	gcc -fopenmp -o mergesort mergesort.o -L../ -lomp_logs
-
-mergesort.o: mergesort.c
-	gcc -std=c99 -c -O2 -fopenmp mergesort.c
+	$(LD) $^ -o $@ $(LDFLAGS)
 
 for_policies: for_policies.o
-	gcc -fopenmp -o for_policies for_policies.o -L../ -lomp_logs
+	$(LD) $^ -o $@ $(LDFLAGS)
 
-for_policies.o: for_policies.c
-	gcc -std=c99 -c -O2 -fopenmp for_policies.c
-
+%.o: %.c
+	$(CC) -c $(CFLAGS) $< -o $@
 
 clean:
 	rm -f mergesort for_policies *.o
