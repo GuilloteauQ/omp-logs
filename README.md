@@ -74,9 +74,13 @@ void log_task(task_list** l, char* label, int info, int parent_id, void (*f)(voi
  You can move your mouse on it to see some info:
  
   * The ```label``` of the task
-  * The time it took to execute the task
+  * The number of ticks it took to execute the task
   * The ```info``` of the task
  
+
+## Requirements
+
+Have a x86 architecture...
  
 ## Disclaimer
 
