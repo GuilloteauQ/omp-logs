@@ -104,7 +104,7 @@ void svg_text(struct svg_file* s_f, float x, float y, char* color, char* text) {
 void svg_rect(struct svg_file* s_f, float x, float y, float width, float height, char* color, struct task* task, int counter) {
     fprintf(s_f->f, "<rect class=\"task\" x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" fill=\"%s\" stroke=\"black\"/>\n", x, y, width, height, color);
     if (s_f->animated) {
-        fprintf(s_f->f, "<g id=\"tip_%d\">\n<rect x=\"%f\" y=\"%f\" width=\"200\" height=\"%f\" fill=\"white\" stoke=\"black\"/>\n<text x=\"%f\" y=\"%f\">[%s] Time: %llu, Info: %d, From: %d\n</text></g>\n", counter, x, y - height/4.0, height/4.0, x, y - height/8.0,task->label, (int) task->cpu_time_used, task->info, task->parent_thread_id);
+        fprintf(s_f->f, "<g id=\"tip_%d\">\n<rect x=\"%f\" y=\"%f\" width=\"200\" height=\"%f\" fill=\"white\" stoke=\"black\"/>\n<text x=\"%f\" y=\"%f\">[%s] Time: %llu, Info: %d, From: %d\n</text></g>\n", counter, x, y - height/4.0, height/4.0, x, y - height/8.0,task->label,  task->cpu_time_used, task->info, task->parent_thread_id);
     }
 }
 
@@ -158,7 +158,7 @@ struct task* new_task(char* label, int info, int thread_id, int parent_thread_id
 
 /* Print the data inside the task */
 void print_task(struct task* t) {
-    printf("(%s):\n\tCalling Thread: %d\n\tParent Thread: %d\n\tInfo: %d\n\tStart Time: %f\n\tUsed Time CPU: %f\n",
+    printf("(%s):\n\tCalling Thread: %d\n\tParent Thread: %d\n\tInfo: %d\n\tStart Time: %llu\n\tUsed Time CPU: %llu\n",
             t->label,
             t->thread_id,
             t->parent_thread_id,
