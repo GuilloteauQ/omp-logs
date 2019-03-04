@@ -266,7 +266,8 @@ void log_task(task_list** l, char* label, int size, int parent_thread,void (*f)(
     f(args);
     end = clock();
 
-    cpu_time_used = ((double) (end - start));
+    double time_diff = (double) (end - start);
+    cpu_time_used = (time_diff == 0) ? 1 : time_diff;
     if (*l == NULL) {
         *l = task_list_init();
     }
