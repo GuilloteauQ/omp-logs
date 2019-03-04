@@ -14,8 +14,8 @@ struct task {
     int info;
     int thread_id;
     int parent_thread_id;
-    double start_time;
-    double cpu_time_used;
+    unsigned long long int start_time;
+    unsigned long long int cpu_time_used;
     struct task_list* children;
 };
 
