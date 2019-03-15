@@ -104,7 +104,7 @@ void svg_text(struct svg_file* s_f, float x, float y, char* color, char* text) {
 void svg_rect(struct svg_file* s_f, float x, float y, float width, float height, char* color, struct task* task, int counter) {
     fprintf(s_f->f, "<rect class=\"task\" x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" fill=\"%s\" stroke=\"black\"/>\n", x, y, width, height, color);
     if (s_f->animated) {
-        fprintf(s_f->f, "<g id=\"tip_%d\">\n<rect x=\"%f\" y=\"%f\" width=\"200\" height=\"%f\" fill=\"white\" stoke=\"black\"/>\n<text x=\"%f\" y=\"%f\">[%s] Ticks: %llu, Info: %d\n</text></g>\n", counter, x, y - height/4.0, height/4.0, x, y - height/8.0,task->label,  task->cpu_time_used, task->info);
+        fprintf(s_f->f, "<g id=\"tip_%d\">\n<rect x=\"%f\" y=\"%f\" width=\"200\" height=\"%f\" fill=\"white\" stoke=\"black\"/>\n<text x=\"%f\" y=\"%f\">[%s] Ticks: %llu, Info: %d, Start time: %llu\n</text></g>\n", counter, x, y - height/4.0, height/4.0, x, y - height/8.0,task->label,  task->cpu_time_used, task->info, task->start_time);
     }
 }
 
@@ -315,7 +315,7 @@ unsigned long long int remap_time_and_get_max_time(task_list*  l, unsigned long 
         } else {
             current->t->start_time = current->t->start_time - min_time;
         }
-        double challenger = current->t->start_time + current->t->cpu_time_used;
+        unsigned long long int challenger = current->t->start_time + current->t->cpu_time_used;
         if (challenger > current_max) {
             current_max = challenger;
         }
@@ -373,6 +373,7 @@ void update_used_time(struct task_cell* l) {
         for (int j = 0; j < size; j++) {
             if (i != j && start_times[i] < start_times[j] && start_times[j] < start_times[i] + used_times[i]) {
                 current->t->cpu_time_used = start_times[j] - start_times[i];
+                used_times[i] = current->t->cpu_time_used;
             }
         }
         i++;
@@ -388,17 +389,30 @@ float get_x_position(unsigned long long int time, unsigned long long int max_tim
     return time * (end_x - begin_x) / ((float) max_time) + begin_x;
 }
 
+float compute_idle_time_percentage(struct task_cell* l, unsigned long long int max_time) {
+    unsigned long long int s = 0;
+    struct task_cell* current = l;
+
+    while (current != NULL) {
+        s += current->t->cpu_time_used;
+        current = current->next;
+    }
+
+    return ((max_time - s) * 100.0 / max_time);
+}
+
 /* Draw all the content for a single thread */
 void thread_to_svg(struct task_cell* l, struct svg_file* s_f, unsigned long long int max_time, float begin_x, float end_x, float begin_y, float task_height, char* color, int* counter, int thread_id, int** defs) {
     update_used_time(l);
+    float idle_time_percentage = compute_idle_time_percentage(l, max_time);
     struct task_cell* current = l;
 
     // Draw the line for time
     svg_line(s_f, begin_x, begin_y, end_x, begin_y, "stroke:rgb(0,0,0);stroke-width:3");
     // Write the name of the thread
-    char* name = malloc(sizeof(char) * 9);
-    sprintf(name, "Thread %d", thread_id);
-    svg_text(s_f, (s_f->width - end_x)/2 + end_x, begin_y, thread_color(thread_id), name);
+    char* name = malloc(sizeof(char) * 45);
+    sprintf(name, "Thread %d: %2.1f %% Idle", thread_id, idle_time_percentage);
+    svg_text(s_f, (s_f->width - end_x)/6 + end_x, begin_y, thread_color(thread_id), name);
     free(name);
 
     char* fill = malloc(sizeof(char) * 15);
