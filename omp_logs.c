@@ -97,7 +97,7 @@ void svg_line(struct svg_file* s_f, float x1, float y1, float x2, float y2, char
 
 /* Write some text in the SVG file */
 void svg_text(struct svg_file* s_f, float x, float y, char* color, char* text) {
-    fprintf(s_f->f, "<text x=\"%f\" y=\"%f\" fill=\"%s\">%s</text>\n", x, y, color, text);
+    fprintf(s_f->f, "<text x=\"%f\" y=\"%f\" fill=\"%s\" font-size=\"20\">%s</text>\n", x, y, color, text);
 }
 
 /* Draw a rectangle in the SVG file */
@@ -423,8 +423,8 @@ int** define_gradients(struct svg_file* s_f, int max_thread) {
  * and draw the tasks for every thread
  */
 void tasks_to_svg(task_list* l, char* filename, int animated) {
-    int width = 2000;
-    int height = 800;
+    const int width = 2000;
+    const int height = 800;
     int thread_pool_size = omp_get_max_threads();
     float h = height / (float) (thread_pool_size + 1);
     float begin_x = 0.0;
@@ -433,8 +433,14 @@ void tasks_to_svg(task_list* l, char* filename, int animated) {
     struct svg_file* s_f = new_svg_file(filename, width, height, animated);
     int** defs = define_gradients(s_f, thread_pool_size);
 
-
+    int nb_of_tasks = get_size(l);
     unsigned long long int max_time = remap_time_and_get_max_time(l, get_min_time(l));
+
+    char* data_info = malloc(45 * sizeof(char));
+    sprintf(data_info, "Stats: %d tasks, %llu total ticks", nb_of_tasks, max_time);
+
+    svg_text(s_f, width / 2.0 - 200.0, 0.0, "black", data_info);
+
     struct task_cell** tasks_per_thread = get_tasks_per_thread(l);
     int counter = 0;
 
