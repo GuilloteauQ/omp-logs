@@ -271,6 +271,22 @@ void log_task(task_list** l, char* label, int size, int parent_thread,void (*f)(
     push(*l, new_task(label, size, thread_id, parent_thread,  start, end - start));
 }
 
+unsigned long long int compute_residue() {
+    task_list* l = task_list_init();
+    unsigned long long int start, end;
+
+    start = _rdtsc();
+
+    if (l == NULL) {
+        l = task_list_init();
+    }
+    push(l, new_task("", 0, 0, 0,  0, 0));
+
+    end = _rdtsc();
+    return end - start;
+
+}
+
 /* Return the minimum starting time in the list */
 unsigned long long int get_min_time(task_list* l) {
     unsigned long long int current_min = l->head->t->start_time;
@@ -294,7 +310,11 @@ unsigned long long int remap_time_and_get_max_time(task_list*  l, unsigned long 
     struct task_cell* current = l->head;
 
     while (current != NULL) {
-        current->t->start_time = current->t->start_time - min_time;
+        if (current->t->start_time - min_time < 0) {
+            current->t->start_time = 0;
+        } else {
+            current->t->start_time = current->t->start_time - min_time;
+        }
         double challenger = current->t->start_time + current->t->cpu_time_used;
         if (challenger > current_max) {
             current_max = challenger;
@@ -434,7 +454,9 @@ void tasks_to_svg(task_list* l, char* filename, int animated) {
     int** defs = define_gradients(s_f, thread_pool_size);
 
     int nb_of_tasks = get_size(l);
-    unsigned long long int max_time = remap_time_and_get_max_time(l, get_min_time(l));
+    unsigned long long int residue = compute_residue();
+    unsigned long long int max_time = remap_time_and_get_max_time(l, get_min_time(l) - residue);
+
 
     char* data_info = malloc(45 * sizeof(char));
     sprintf(data_info, "Stats: %d tasks, %llu total ticks", nb_of_tasks, max_time);
