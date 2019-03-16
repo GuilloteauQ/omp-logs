@@ -50,7 +50,7 @@ void log_task(task_list** l, char* label, int info, int parent_id, void (*f)(voi
  
  I invite you to look at the examples ```mergesort.c``` and ```for_policies.c```
  
- ### 4) See your logs !
+### 4) See your logs !
  
  When all the parallel stuff is done, you can get the logs in a ```svg``` file:
  
