@@ -65,7 +65,7 @@ void log_task(task_list** l, char* label, int info, int parent_id, void (*f)(voi
  
  Here is an example (**For the full experience**: click on the image, and then, right click -> "View Image"):
  
- ![example](https://github.com/GuilloteauQ/omp-logs/blob/master/mergesort.svg)
+ ![example](https://github.com/GuilloteauQ/omp-logs/blob/master/mergesort_with_blocks.svg)
  
  Every line represents a thread across time.
  
